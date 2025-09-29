@@ -75,7 +75,7 @@ class Billet:
 
                 cls._id = max_id + 1
 
-        except (JSONDecodeError, TypeError):
+        except (JSONDecodeError, TypeError, KeyError):
             error(
                 "Error while trying to load json data, the program is using empty data for now"
             )
