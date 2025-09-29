@@ -1,6 +1,8 @@
 from json import JSONDecodeError, dump, load
 from typing import Optional
 
+from utils.logger import error
+
 
 class Acheteur:
     achateurs = []
@@ -55,8 +57,8 @@ class Acheteur:
                 cls._id = max_id + 1
 
         except (JSONDecodeError, TypeError):
-            print(
-                "[!] Error while trying to load json data, the program is using empty data for now"
+            error(
+                "Error while trying to load json data, the program is using empty data for now"
             )
 
         except FileNotFoundError:
