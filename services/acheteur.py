@@ -4,12 +4,6 @@ from validations.acheteur import validate_acheteur_email
 from validations.common import validate_required
 
 
-Acheteur("Imrane Aabbou", "imrane.aabbou@gmail.com")
-Acheteur("Alice Dupont", "alice.dupont@gmail.com")
-Acheteur("Bob Martin", "bob.martin@gmail.com")
-Acheteur("Chloé Lefevre", "chloe.lefevre@gmail.com")
-
-
 def faire_des_achats_menu():
     from services.main_menu import main_menu
 
