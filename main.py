@@ -3,7 +3,10 @@ import seeders.main as _
 
 
 def main():
-    main_menu()
+    try:
+        main_menu()
+    except:
+        pass
 
 
 if __name__ == "__main__":
