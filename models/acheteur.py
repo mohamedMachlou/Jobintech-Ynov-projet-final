@@ -43,5 +43,8 @@ class Acheteur:
                 "[!] Error while trying to load json data, the program is using empty data for now"
             )
 
+        except FileNotFoundError:
+            pass
+
 
 Acheteur._load()
