@@ -4,6 +4,29 @@ from validations.acheteur import validate_acheteur_email
 from validations.common import validate_required
 
 
+Acheteur("Imrane Aabbou", "imrane.aabbou@gmail.com")
+Acheteur("Alice Dupont", "alice.dupont@gmail.com")
+Acheteur("Bob Martin", "bob.martin@gmail.com")
+Acheteur("Chloé Lefevre", "chloe.lefevre@gmail.com")
+
+
+def faire_des_achats_menu():
+    from services.main_menu import main_menu
+
+    FAIRE_ACHATS_CHOICES = {
+        "Nouveau Acheteur": acheteur_registration,
+        "Acheteur Existant": acheteur_user_selection,
+        "Retour": main_menu,
+    }
+
+    choice = select(
+        " ",
+        choices=list(FAIRE_ACHATS_CHOICES.keys()),
+    )
+
+    FAIRE_ACHATS_CHOICES[choice]()
+
+
 def acheteur_registration():
     name = input("Nom:", validate=validate_required)
     email = input("Email:", validate=validate_acheteur_email)
@@ -49,7 +72,5 @@ def acheteur_user_selection():
         f"",
         choices=list(ACHETEUR_USER_SELECTION_CHOICES.keys()),
     )
-
-    print("here is choice: ", choice)
 
     ACHETEUR_USER_SELECTION_CHOICES[choice]()
