@@ -1,4 +1,4 @@
-from models import concert
+from ..models import concert
 Concert = concert.Concert
 
 # l'Ajout d'un nouveau concert
