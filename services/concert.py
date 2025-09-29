@@ -12,10 +12,8 @@ def update_concert(id_evenement, date, lieu):
     concert_to_update = next((concert for concert in Concert.toutes_concerts if concert.id_evenement == id_evenement), None)
 
     if concert_to_update is not None:
-        if concert_to_update.date is not None:
-            concert_to_update.date = date
-        if concert_to_update.lieu is not None:
-            concert_to_update.lieu = lieu
+        concert_to_update.date = date
+        concert_to_update.lieu = lieu
         return concert_to_update
     else:
         print(f'Aucun concert trouvé avec ID d\'Evenement [{id_evenement}]!')
@@ -29,9 +27,8 @@ def delete_concert(id_evenement):
     Concert.toutes_concerts = [concert for concert in Concert.toutes_concerts if concert.id_evenement != id_evenement]
 
     if nombre_initial > len(Concert.toutes_concerts):
-        print(f'l\'Eveinement d\'ID: [{id_evenement}] a été supprimé!')
+        print(f'l\'Evenement d\'ID: [{id_evenement}] a été supprimé!')
         return True
     else:
-        print(f'Aucun concert trouvé avec ID d\'Eveinement [{id_evenement}]!')
+        print(f'Aucun concert trouvé avec ID d\'Evenement [{id_evenement}]!')
         return False
-    
