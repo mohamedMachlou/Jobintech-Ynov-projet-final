@@ -1,2 +1,2 @@
-# Classe Billetterie
 class Billetterie:
+    pass

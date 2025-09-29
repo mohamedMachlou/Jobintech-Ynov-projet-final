@@ -1,4 +1,3 @@
-# Classe Vente
 import billet
 
 class Vente:

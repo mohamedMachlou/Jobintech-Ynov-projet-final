@@ -1,6 +1,17 @@
+from evenement import Evenement
 
-# classe Conference
-class Conference:
-    def __init__(self, id_evenement, titre, date, lieu, capacite, places_vendues, orateur_principal):
-        super().__init__(id_evenement, titre, date, lieu, capacite, places_vendues)
-        self.orateur_principal = orateur_principal
+
+class Conference(Evenement):
+    def __init__(
+        self,
+        id_evenement: int,
+        titre: str,
+        date: str,
+        lieu: str,
+        capacite: int,
+        places_vendues: int,
+        orateur: str,
+    ):
+        super().__init__(id_evenement, titre, date, lieu, capacite)
+        self.orateur = orateur
+        self.places_vendues = places_vendues
