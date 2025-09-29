@@ -7,7 +7,7 @@ def ajout_nouveau_concert(id_evenement, titre, date, lieu, capacite, artiste):
     return new_concert
 
 
-# Mis à jour de concert
+# Mis à jour un concert
 def update_concert(id_evenement, date, lieu):
     concert_to_update = next((concert for concert in Concert.toutes_concerts if concert.id_evenement == id_evenement), None)
 
@@ -21,7 +21,7 @@ def update_concert(id_evenement, date, lieu):
 
 
 
-# Supprimer d'un concert
+# Supprimer un concert
 def delete_concert(id_evenement):
     nombre_initial = len(Concert.toutes_concerts)
     Concert.toutes_concerts = [concert for concert in Concert.toutes_concerts if concert.id_evenement != id_evenement]
