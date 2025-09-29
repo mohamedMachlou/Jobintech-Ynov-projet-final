@@ -33,11 +33,27 @@ class Acheteur:
         try:
             with open("storage/acheteurs.json") as f:
                 cls.achateurs = list(
-                    map(
-                        lambda a: Acheteur(a["nom"], a["email"], a["id_acheteur"]),
-                        load(f),
+                    sorted(
+                        map(
+                            lambda a: Acheteur(a["nom"], a["email"], a["id_acheteur"]),
+                            load(f),
+                        ),
+                        key=lambda a: a.id_acheteur,
                     )
                 )
+                max_id = (
+                    0
+                    if (
+                        max_id_element := max(
+                            cls.achateurs, default=None, key=lambda a: a.id_acheteur
+                        )
+                    )
+                    is None
+                    else max_id_element.id_acheteur
+                )
+
+                cls._id = max_id + 1
+
         except (JSONDecodeError, TypeError):
             print(
                 "[!] Error while trying to load json data, the program is using empty data for now"
