@@ -2,6 +2,10 @@ from evenement import Evenement
 
 
 class Concert(Evenement):
+    # Lites des concerts
+    toutes_concerts = []
+
+    # Fonction d'initialisation de Concert
     def __init__(
         self,
         id_evenement: int,
@@ -13,3 +17,9 @@ class Concert(Evenement):
     ):
         super().__init__(id_evenement, titre, date, lieu, capacite)
         self.artiste = artiste
+
+
+
+
+
+
