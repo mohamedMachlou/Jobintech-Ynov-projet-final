@@ -1,9 +1,9 @@
-from utils import text, radio, checkbox, select
+from utils import input, radio, checkbox, select
 
 
 def main():
     # 1️⃣ Normal text input
-    name = text("Enter your name:")
+    name = input("Enter your name:")
     print(f"Hello, {name}!\n")
 
     # 2️⃣ Single choice (radio)
