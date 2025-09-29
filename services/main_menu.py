@@ -1,3 +1,4 @@
+from services.acheteur import acheteur_registration
 from utils.inputs import select
 
 
@@ -43,7 +44,7 @@ GESTION_EVENEMENTS_CHOICES = {
 }
 
 FAIRE_ACHATS_CHOICES = {
-    "Nouveaux acheteur": lambda: print("TODO: acheteur registration menu"),
+    "Nouveau Acheteur": acheteur_registration,
     "Acheteur Existant": lambda: print("TODO: acheteur selection menu"),
     "Retour": main_menu,
 }
