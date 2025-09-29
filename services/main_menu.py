@@ -19,9 +19,18 @@ def gestion_evenements_menu():
     GESTION_EVENEMENTS_CHOICES[choice]()
 
 
+def faire_des_achats_menu():
+    choice = select(
+        " ",
+        choices=list(FAIRE_ACHATS_CHOICES.keys()),
+    )
+
+    FAIRE_ACHATS_CHOICES[choice]()
+
+
 MAIN_MENU_CHOICES = {
     "Gestion des événements": gestion_evenements_menu,
-    "Faire des achats": lambda: print("TODO: for ventes"),
+    "Faire des achats": faire_des_achats_menu,
     "Quitter": lambda: exit(0),
 }
 
@@ -30,5 +39,11 @@ GESTION_EVENEMENTS_CHOICES = {
     "Gestion des Concerts": lambda: print("TODO: for concert"),
     "Gestion des ": lambda: print("TODO: for conferences"),
     "Gestion des utilisateurs": lambda: print("Utilisateurs logic here..."),
+    "Retour": main_menu,
+}
+
+FAIRE_ACHATS_CHOICES = {
+    "Nouveaux acheteur": lambda: print("TODO: acheteur registration menu"),
+    "Acheteur Existant": lambda: print("TODO: acheteur selection menu"),
     "Retour": main_menu,
 }
