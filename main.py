@@ -1,4 +1,5 @@
 from services.main_menu import main_menu
+import seeders.main as _
 
 
 def main():
