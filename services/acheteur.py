@@ -59,7 +59,7 @@ def acheteur_user_selection():
             a.nom: (lambda a=a: acheteur_action_selection_menu(a))
             for a in Acheteur.achateurs
         },
-        "Retour": acheteur_action_selection_menu,
+        "Retour": faire_des_achats_menu,
     }
 
     choice = select(
