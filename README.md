@@ -20,6 +20,36 @@ pip install -r requirements.txt
 ```
 
 
+## 📝 Collecting User Inputs
+### 1. Normal Text Input: 
+
+```python
+from utils import input
+```
+
+### 2. Single Choice (Radio)
+
+Use this type when the user should **select only one option** from a list.
+
+```python
+from utils import radio
+```
+
+### 3. Multiple Choice (Checkbox)
+
+Use this type when the user should **select multiple options** from a list.
+
+```python
+from utils import checkbox
+```
+
+### 4. Select Menu
+
+Use this type for a **menu-style selection**, usually with a longer list or hierarchical options.
+
+```python
+from utils import select
+```
 ## 📝 Notes
 
 - Always **activate the virtual environment** before running or installing anything.  
