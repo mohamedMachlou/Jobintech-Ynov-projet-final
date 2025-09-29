@@ -38,7 +38,7 @@ class Acheteur:
                         load(f),
                     )
                 )
-        except JSONDecodeError:
+        except (JSONDecodeError, TypeError):
             print(
                 "[!] Error while trying to load json data, the program is using empty data for now"
             )
