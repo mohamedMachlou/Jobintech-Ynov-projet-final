@@ -54,13 +54,12 @@ class Billet:
         try:
             with open("storage/billets.json") as f:
                 cls.billets = list(
-                    sorted(
-                        map(
-                            lambda b: Billet(b["prix_base"], b["type_billet"], b["id_billet"]),
-                            load(f),
+                    map(
+                        lambda b: Billet(
+                            b["prix_base"], b["type_billet"], b["id_billet"]
                         ),
-                        key=lambda a: a.id_billet,
-                    )
+                        load(f),
+                    ),
                 )
                 max_id = (
                     0

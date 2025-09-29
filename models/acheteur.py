@@ -35,13 +35,10 @@ class Acheteur:
         try:
             with open("storage/acheteurs.json") as f:
                 cls.achateurs = list(
-                    sorted(
                         map(
                             lambda a: Acheteur(a["nom"], a["email"], a["id_acheteur"]),
                             load(f),
                         ),
-                        key=lambda a: a.id_acheteur,
-                    )
                 )
                 max_id = (
                     0
