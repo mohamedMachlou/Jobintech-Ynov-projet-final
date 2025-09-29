@@ -1,5 +1,10 @@
 class Acheteur:
-    def __init__(self, id_acheteur, nom, email):
-        self.id_acheteur = id_acheteur
+    achateurs = []
+    _id = 1
+
+    def __init__(self, nom: str, email: str):
+        self.id_acheteur = self._id
         self.nom = nom
         self.email = email
+        Acheteur.achateurs.append(self)
+        Acheteur._id += 1
