@@ -5,7 +5,6 @@ from models.conference import Conference
 
 data = [
     {
-        "id_evenement": 1,
         "titre": "Concert Rock",
         "date": "2025-10-10",
         "lieu": "Stade Olympique",
@@ -14,7 +13,6 @@ data = [
         "artiste": "Les Électrons",
     },
     {
-        "id_evenement": 2,
         "titre": "Conférence IA",
         "date": "2025-11-05",
         "lieu": "Palais des Congrès",
@@ -23,7 +21,6 @@ data = [
         "orateur_principal": "Dr. Jeanne Dupont",
     },
     {
-        "id_evenement": 3,
         "titre": "Salon du Livre",
         "date": "2025-12-01",
         "lieu": "Centre Culturel",
@@ -35,11 +32,25 @@ data = [
 
 for e in data:
     (
-        Concert(e["titre"], e["date"], e["lieu"], e["capacite"], e["artiste"], e["id_evenement"], e["places_vendues"])
+        Concert(
+            e["titre"],
+            e["date"],
+            e["lieu"],
+            e["capacite"],
+            e["artiste"],
+            None,
+            e["places_vendues"],
+        )
         if "artiste" in e
         else (
             Conference(
-                e["titre"], e["date"], e["lieu"], e["capacite"], e["orateur_principal"], e["id_evenement"], e["places_vendues"]
+                e["titre"],
+                e["date"],
+                e["lieu"],
+                e["capacite"],
+                e["orateur_principal"],
+                None,
+                e["places_vendues"],
             )
             if "orateur_principal" in e
             else Evenement(
@@ -47,8 +58,8 @@ for e in data:
                 e["date"],
                 e["lieu"],
                 e["capacite"],
-                e["id_evenement"],
-                e["places_vendues"]
+                None,
+                e["places_vendues"],
             )
         )
     )
