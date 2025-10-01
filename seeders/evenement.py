@@ -1,4 +1,4 @@
-from datetime import date as Date
+from datetime import datetime as Datetime
 from models.evenement import Evenement
 from models.concert import Concert
 from models.conference import Conference
@@ -38,7 +38,7 @@ for e in data:
     (
         Concert(
             e["titre"],
-            Date.fromisoformat(e["date"]),
+            Datetime.fromisoformat(e["date"]),
             e["lieu"],
             e["prix_base"],
             e["capacite"],
@@ -50,7 +50,7 @@ for e in data:
         else (
             Conference(
                 e["titre"],
-                Date.fromisoformat(e["date"]),
+                Datetime.fromisoformat(e["date"]),
                 e["lieu"],
                 e["prix_base"],
                 e["capacite"],
@@ -61,7 +61,7 @@ for e in data:
             if "orateur_principal" in e
             else Evenement(
                 e["titre"],
-                Date.fromisoformat(e["date"]),
+                Datetime.fromisoformat(e["date"]),
                 e["lieu"],
                 e["prix_base"],
                 e["capacite"],

@@ -1,5 +1,5 @@
 from json import JSONDecodeError, dump, load
-from datetime import date as DateType, date as Date
+from datetime import datetime as DatetimeType, datetime as Datetime
 from typing import Optional
 
 from utils.logger import error
@@ -13,7 +13,7 @@ class Evenement:
     def __init__(
         self,
         titre: str,
-        date_event: DateType,
+        date_event: DatetimeType,
         lieu: str,
         prix_base: int,
         capacite: int,
@@ -67,7 +67,7 @@ class Evenement:
                         lambda e: (
                             Concert(
                                 e["titre"],
-                                Date.fromisoformat(e["date"]),
+                                Datetime.fromisoformat(e["date"]),
                                 e["lieu"],
                                 e["capacite"],
                                 e["artiste"],
@@ -78,7 +78,7 @@ class Evenement:
                             else (
                                 Conference(
                                     e["titre"],
-                                    Date.fromisoformat(e["date"]),
+                                    Datetime.fromisoformat(e["date"]),
                                     e["lieu"],
                                     e["capacite"],
                                     e["orateur_principal"],
@@ -88,7 +88,7 @@ class Evenement:
                                 if "orateur_principal" in e
                                 else Evenement(
                                     e["titre"],
-                                    Date.fromisoformat(e["date"]),
+                                    Datetime.fromisoformat(e["date"]),
                                     e["lieu"],
                                     e["capacite"],
                                     e["id_evenement"],

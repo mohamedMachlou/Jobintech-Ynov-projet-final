@@ -1,13 +1,13 @@
 from typing import Optional
 from .evenement import Evenement
-from datetime import date as DateType
+from datetime import datetime as DatetimeType
 
 
 class Conference(Evenement):
     def __init__(
         self,
         titre: str,
-        date_event: DateType,
+        date_event: DatetimeType,
         lieu: str,
         prix_base: int,
         capacite: int,
