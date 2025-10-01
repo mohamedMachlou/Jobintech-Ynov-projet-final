@@ -1,6 +1,8 @@
 from json import dump, load, JSONDecodeError
 from typing import Optional
 from .evenement import Evenement
+from datetime import date as DateType
+
 
 
 class Conference(Evenement):
@@ -11,7 +13,7 @@ class Conference(Evenement):
     def __init__(
         self,
         titre: str,
-        date: str,
+        date_evenement: DateType,
         lieu: str,
         capacite: int,
         orateur_principal: str,
@@ -20,7 +22,7 @@ class Conference(Evenement):
     ):
         # ID auto-incrémenté
         self.id_evenement = Conference._id if _id is None else _id
-        super().__init__(titre, date, lieu, capacite, self.id_evenement, places_vendues)
+        super().__init__(titre, date_evenement, lieu, capacite, self.id_evenement, places_vendues)
         self.orateur_principal = orateur_principal
 
         # Ajouter à la liste et synchroniser JSON

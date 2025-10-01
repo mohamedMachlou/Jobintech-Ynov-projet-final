@@ -16,17 +16,18 @@ from services import concert_service
 
 from services import ajout_nouveau_concert, update_concert, delete_concert
 from models import Concert
+from datetime import date
 
 # Ajout de concerts
-c1 = ajout_nouveau_concert("Rock Night", "2025-12-20", "Casablanca", 500, "Coldplay")
-c2 = ajout_nouveau_concert("Jazz Evening", "2025-11-10", "Rabat", 300, "Norah Jones")
+c1 = ajout_nouveau_concert("Rock Night", date(2025,12,20), "Casablanca", 500, "Coldplay")
+c2 = ajout_nouveau_concert("Jazz Evening", date(2025, 11, 10), "Rabat", 300, "Norah Jones")
 
 # Afficher les concerts
 for c in Concert.concerts:
     print(c)
 
 # Mise à jour
-update_concert(1, "2025-12-25", "Marrakech")
+update_concert(1, date(2025, 12, 25), "Marrakech")
 
 # Suppression
 delete_concert(2)

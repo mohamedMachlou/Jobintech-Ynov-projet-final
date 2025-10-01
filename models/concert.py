@@ -1,6 +1,7 @@
 from json import dump, load, JSONDecodeError
 from typing import Optional
 from .evenement import Evenement
+from datetime import date as DateType
 
 
 class Concert(Evenement):
@@ -11,7 +12,7 @@ class Concert(Evenement):
     def __init__(
         self,
         titre: str,
-        date: str,
+        date_evenement: DateType,
         lieu: str,
         capacite: int,
         artiste: str,
@@ -20,7 +21,7 @@ class Concert(Evenement):
     ):
         # ID auto-incrémenté
         self.id_evenement = Concert._id if _id is None else _id
-        super().__init__(titre, date, lieu, capacite, self.id_evenement, places_vendues)
+        super().__init__(titre, date_evenement, lieu, capacite, self.id_evenement, places_vendues)
         self.artiste = artiste
 
         # Ajouter à la liste et synchroniser JSON
@@ -38,9 +39,16 @@ class Concert(Evenement):
 
     @classmethod
     def _sync(cls):
-        # Écriture JSON sans créer le dossier automatiquement
         with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
-            dump([c.__dict__ for c in cls.concerts], f, indent=4, ensure_ascii=False)
+            dump(
+                [
+                    {**c.__dict__, "date": c.date.isoformat()}  # <-- ici
+                    for c in cls.concerts
+                ],
+                f,
+                indent=4,
+                ensure_ascii=False
+            )
 
     @classmethod
     def _load(cls):
