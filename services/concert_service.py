@@ -1,4 +1,4 @@
-from models import Concert
+from models.concert import Concert
 
 # Ajout d'un nouveau concert
 def ajout_nouveau_concert(titre, date, lieu, capacite, artiste):
@@ -9,7 +9,7 @@ def ajout_nouveau_concert(titre, date, lieu, capacite, artiste):
 # Mise à jour d'un concert
 def update_concert(id_evenement, date, lieu):
     concert_to_update = next(
-        (concert for concert in Concert.tous_concerts if concert.id_evenement == id_evenement),
+        (concert for concert in Concert.concerts if concert.id_evenement == id_evenement),
         None
     )
 
@@ -25,7 +25,7 @@ def update_concert(id_evenement, date, lieu):
 # Supprimer un concert
 def delete_concert(id_evenement):
     concert_to_delete = next(
-        (concert for concert in Concert.tous_concerts if concert.id_evenement == id_evenement),
+        (concert for concert in Concert.concerts if concert.id_evenement == id_evenement),
         None
     )
     if concert_to_delete:

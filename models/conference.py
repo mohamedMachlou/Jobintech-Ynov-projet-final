@@ -1,6 +1,6 @@
 from json import dump, load, JSONDecodeError
 from typing import Optional
-from models import Evenement
+from .evenement import Evenement
 
 
 class Conference(Evenement):
