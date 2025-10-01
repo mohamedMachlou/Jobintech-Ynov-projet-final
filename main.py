@@ -1,5 +1,5 @@
 # from services.main_menu import main_menu
-from services import concert
+from services import concert_service
 # import seeders.main as _
 #
 #
