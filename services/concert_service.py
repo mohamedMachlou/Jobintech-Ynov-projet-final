@@ -1,9 +1,15 @@
 from models.concert import Concert
+from validations.concert import validate_concert_data
 
 # Ajout d'un nouveau concert
-def ajout_nouveau_concert(titre, date, lieu, capacite, artiste):
-    new_concert = Concert(titre, date, lieu, capacite, artiste)
-    print('Ajout réussi !')
+def ajout_nouveau_concert(titre, date, lieu,prix_base, capacite, artiste):
+    errors = validate_concert_data(titre, date, lieu,prix_base, capacite, artiste)
+    if errors:
+        print("Erreur de validation :", errors)
+        return None
+
+    new_concert = Concert(titre, date, lieu,prix_base, capacite, artiste)
+    print("Ajout réussi !")
     return new_concert
 
 # Mise à jour d'un concert
@@ -14,12 +20,15 @@ def update_concert(id_evenement, date, lieu):
     )
 
     if concert_to_update is not None:
-        concert_to_update.date = date
-        concert_to_update.lieu = lieu
-        concert_to_update._sync()  # mettre à jour le fichier JSON
+        # petite validation simple pour la mise à jour
+        if date:
+            concert_to_update.date = date
+        if lieu:
+            concert_to_update.lieu = lieu
+        concert_to_update._sync()
         return concert_to_update
     else:
-        print(f'Aucun concert trouvé avec ID d\'Evenement [{id_evenement}]!')
+        print(f"Aucun concert trouvé avec ID [{id_evenement}] !")
         return None
 
 # Supprimer un concert
@@ -29,9 +38,9 @@ def delete_concert(id_evenement):
         None
     )
     if concert_to_delete:
-        concert_to_delete.delete()  # utilise la méthode delete du modèle
-        print(f'Evenement d\'ID [{id_evenement}] supprimé !')
+        concert_to_delete.delete()
+        print(f"Evenement d'ID [{id_evenement}] supprimé !")
         return True
     else:
-        print(f'Aucun concert trouvé avec ID d\'Evenement [{id_evenement}]!')
+        print(f"Aucun concert trouvé avec ID [{id_evenement}] !")
         return False
