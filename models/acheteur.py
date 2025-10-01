@@ -1,6 +1,7 @@
 from json import JSONDecodeError, dump, load
 from typing import Optional
 
+from models.vente import Vente
 from utils.logger import error
 
 
@@ -19,6 +20,15 @@ class Acheteur:
     def delete(self):
         Acheteur.achateurs.remove(self)
         self._sync()
+
+    @property
+    def ventes(self):
+        return list(
+            filter(
+                lambda v: getattr(v.acheteur, "id_acheteur", None) == self.id_acheteur,
+                Vente.ventes,
+            )
+        )
 
     @classmethod
     def _sync(cls):

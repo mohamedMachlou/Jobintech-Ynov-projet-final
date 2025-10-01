@@ -47,6 +47,9 @@ class Vente:
             self.evenement.places_vendues += 1
             self.evenement._sync()
 
+    def __str__(self):
+        return f"{self.type_billet}: {self.evenement} x {self.quantite} = {self.prix_total}"
+
     @property
     def evenement(self):
         from models.evenement import Evenement

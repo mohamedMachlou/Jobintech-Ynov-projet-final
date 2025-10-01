@@ -2,6 +2,7 @@ from json import JSONDecodeError, dump, load
 from datetime import datetime as DatetimeType, datetime as Datetime
 from typing import Optional
 
+from utils.datetime import format_datetime
 from utils.logger import error
 
 
@@ -34,7 +35,15 @@ class Evenement:
         self._sync()
 
     def __str__(self):
-        return f"[{self.id_evenement}] {self.titre} - {self.date.isoformat()} - {self.lieu} - Prix Base: {self.prix_base}"
+        event_type = (
+            "Concert"
+            if hasattr(self, "artiste")
+            else "Conference" if hasattr(self, "orateur_principal") else "Evenement"
+        )
+
+        event_by = getattr(self, "artiste", getattr(self, "orateur_principal", None))
+
+        return f"[{event_type}] ({ '' if not event_by else (event_by + ' |')} {self.titre}, {format_datetime(self.date)} - {self.lieu} => Prix Base: {self.prix_base})"
 
     @property
     def places_restantes(self):
@@ -69,6 +78,7 @@ class Evenement:
                                 e["titre"],
                                 Datetime.fromisoformat(e["date"]),
                                 e["lieu"],
+                                e["prix_base"],
                                 e["capacite"],
                                 e["artiste"],
                                 e["id_evenement"],
@@ -80,6 +90,7 @@ class Evenement:
                                     e["titre"],
                                     Datetime.fromisoformat(e["date"]),
                                     e["lieu"],
+                                    e["prix_base"],
                                     e["capacite"],
                                     e["orateur_principal"],
                                     e["id_evenement"],
@@ -90,6 +101,7 @@ class Evenement:
                                     e["titre"],
                                     Datetime.fromisoformat(e["date"]),
                                     e["lieu"],
+                                    e["prix_base"],
                                     e["capacite"],
                                     e["id_evenement"],
                                     e["places_vendues"],

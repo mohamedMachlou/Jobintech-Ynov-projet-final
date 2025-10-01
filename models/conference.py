@@ -22,4 +22,3 @@ class Conference(Evenement):
 
     def __str__(self):
         return super().__str__() + f" - Orateur: {self.orateur_principal}"
-
