@@ -1,52 +1,3 @@
-<<<<<<< HEAD
-from services import ajout_nouveau_concert, update_concert, delete_concert
-from models import Concert
-from datetime import date
-# from services.main_menu import main_menu
-from services import concert_service
-# import seeders.main as _
-#
-#
-# def main():
-#     try:
-#         main_menu()
-#     except:
-#         pass
-#
-#
-# if __name__ == "__main__":
-#     main()
-
-
-
-
-
-##################################################################
-################## Start Concert Test#############################
-##################################################################
-# Ajout de concerts
-c1 = ajout_nouveau_concert("Rock Night", date(2025,12,20), "Casablanca", 500, "Coldplay")
-c2 = ajout_nouveau_concert("Jazz Evening", date(2025, 11, 10), "Rabat", 300, "Norah Jones")
-c3 = ajout_nouveau_concert("Sabattique", date(2025, 5, 26), "Agadir", 300, "Machlou")
-
-# Afficher les concerts
-for c in Concert.concerts:
-    print(c)
-
-# Mise à jour
-update_concert(1, date(2025, 12, 25), "Marrakech")
-
-# Suppression
-delete_concert(2)
-
-# Affichage final
-for c in Concert.concerts:
-    print(c)
-
-##################################################################
-################## End Concert Test #############################
-##################################################################
-=======
 from services.main_menu import main_menu
 import seeders.main as _
 import utils.data_loader as _
@@ -61,4 +12,3 @@ def main():
 
 if __name__ == "__main__":
     main()
->>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1

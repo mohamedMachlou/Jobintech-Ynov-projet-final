@@ -1,92 +1,23 @@
-<<<<<<< HEAD
-from json import dump, load, JSONDecodeError
-=======
->>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
 from typing import Optional
 from .evenement import Evenement
 from datetime import date as DateType
 
 
 class Concert(Evenement):
-<<<<<<< HEAD
-    concerts = []  # Liste pour stocker tous les concerts
-    _id = 1
-    STORAGE_FILE = "storage/concerts.json"
-=======
->>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
-
     def __init__(
         self,
         titre: str,
-        date_evenement: DateType,
+        date_event: DateType,
         lieu: str,
+        prix_base: int,
         capacite: int,
         artiste: str,
         _id: Optional[int] = None,
         places_vendues: Optional[int] = None,
     ):
-<<<<<<< HEAD
-        # ID auto-incrémenté
-        self.id_evenement = Concert._id if _id is None else _id
-        super().__init__(titre, date_evenement, lieu, capacite, self.id_evenement, places_vendues)
-=======
->>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
         self.artiste = artiste
+        super().__init__(titre, date_event, lieu, prix_base, capacite, _id, places_vendues)
 
-<<<<<<< HEAD
-        # Ajouter à la liste et synchroniser JSON
-        Concert.concerts.append(self)
-        Concert._id += 1
-        self._sync()
-
-=======
->>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
     def __str__(self):
         return super().__str__() + f" - Artiste: {self.artiste}"
 
-    def delete(self):
-        if self in Concert.concerts:
-            Concert.concerts.remove(self)
-            self._sync()
-
-    @classmethod
-    def _sync(cls):
-        with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
-            dump(
-                [
-                    {**c.__dict__, "date": c.date.isoformat()}  # <-- ici
-                    for c in cls.concerts
-                ],
-                f,
-                indent=4,
-                ensure_ascii=False
-            )
-
-    @classmethod
-    def _load(cls):
-        try:
-            with open(cls.STORAGE_FILE, "r", encoding="utf-8") as f:
-                data = load(f)
-                cls.concerts = [
-                    Concert(
-                        c["titre"],
-                        c["date"],
-                        c["lieu"],
-                        c["capacite"],
-                        c["artiste"],
-                        c["id_evenement"],
-                        c["places_vendues"],
-                    )
-                    for c in data
-                ]
-                max_id = max((c.id_evenement for c in cls.concerts), default=0)
-                cls._id = max_id + 1
-
-        except (JSONDecodeError, TypeError, KeyError):
-            print("Erreur JSON, utilisation d'une liste vide pour le moment")
-        except FileNotFoundError:
-            pass
-
-
-# Charger les concerts existants au démarrage
-Concert._load()

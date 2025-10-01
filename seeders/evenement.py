@@ -1,3 +1,4 @@
+from datetime import date as Date
 from models.evenement import Evenement
 from models.concert import Concert
 from models.conference import Conference
@@ -10,6 +11,7 @@ data = [
         "lieu": "Stade Olympique",
         "capacite": 5000,
         "places_vendues": 1200,
+        "prix_base": 200,
         "artiste": "Les Électrons",
     },
     {
@@ -18,6 +20,7 @@ data = [
         "lieu": "Palais des Congrès",
         "capacite": 3,
         "places_vendues": 2,
+        "prix_base": 150,
         "orateur_principal": "Dr. Jeanne Dupont",
     },
     {
@@ -25,6 +28,7 @@ data = [
         "date": "2025-12-01",
         "lieu": "Centre Culturel",
         "capacite": 1000,
+        "prix_base": 250,
         "places_vendues": 450,
     },
 ]
@@ -34,8 +38,9 @@ for e in data:
     (
         Concert(
             e["titre"],
-            e["date"],
+            Date.fromisoformat(e["date"]),
             e["lieu"],
+            e["prix_base"],
             e["capacite"],
             e["artiste"],
             None,
@@ -45,8 +50,9 @@ for e in data:
         else (
             Conference(
                 e["titre"],
-                e["date"],
+                Date.fromisoformat(e["date"]),
                 e["lieu"],
+                e["prix_base"],
                 e["capacite"],
                 e["orateur_principal"],
                 None,
@@ -55,8 +61,9 @@ for e in data:
             if "orateur_principal" in e
             else Evenement(
                 e["titre"],
-                e["date"],
+                Date.fromisoformat(e["date"]),
                 e["lieu"],
+                e["prix_base"],
                 e["capacite"],
                 None,
                 e["places_vendues"],

@@ -1,6 +1,9 @@
-from json import dump
-from datetime import date
+from json import JSONDecodeError, dump, load
+from datetime import date as DateType, date as Date
 from typing import Optional
+
+from utils.logger import error
+
 
 class Evenement:
     evenements = []
@@ -10,15 +13,17 @@ class Evenement:
     def __init__(
         self,
         titre: str,
-        date_event: date,
+        date_event: DateType,
         lieu: str,
+        prix_base: int,
         capacite: int,
         _id: Optional[int] = None,
         places_vendues: Optional[int] = None,
     ):
         self.id_evenement = Evenement._id if _id is None else _id
         self.titre = titre
-        self.date = date_event  # stocker comme objet date
+        self.date = date_event
+        self.prix_base = prix_base
         self.lieu = lieu
         self.capacite = capacite
         self.places_vendues = places_vendues if places_vendues is not None else 0
@@ -29,7 +34,7 @@ class Evenement:
         self._sync()
 
     def __str__(self):
-        return f"[{self.id_evenement}] {self.titre} - {self.date.isoformat()} - {self.lieu} - Capacité: {self.capacite}, Vendus: {self.places_vendues}"
+        return f"[{self.id_evenement}] {self.titre} - {self.date.isoformat()} - {self.lieu} - Prix Base: {self.prix_base}"
 
     @property
     def places_restantes(self):
@@ -42,16 +47,13 @@ class Evenement:
 
     @classmethod
     def _sync(cls):
-        # Sauvegarde en JSON, convertir date en str pour JSON
         with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
             dump(
                 [{**e.__dict__, "date": e.date.isoformat()} for e in cls.evenements],
                 f,
                 indent=4,
-                ensure_ascii=False
+                ensure_ascii=False,
             )
-<<<<<<< HEAD
-=======
 
     @classmethod
     def _load(cls):
@@ -59,13 +61,13 @@ class Evenement:
         from models.conference import Conference
 
         try:
-            with open("storage/evenements.json") as f:
+            with open(cls.STORAGE_FILE) as f:
                 cls.evenements = list(
                     map(
                         lambda e: (
                             Concert(
                                 e["titre"],
-                                e["date"],
+                                Date.fromisoformat(e["date"]),
                                 e["lieu"],
                                 e["capacite"],
                                 e["artiste"],
@@ -76,7 +78,7 @@ class Evenement:
                             else (
                                 Conference(
                                     e["titre"],
-                                    e["date"],
+                                    Date.fromisoformat(e["date"]),
                                     e["lieu"],
                                     e["capacite"],
                                     e["orateur_principal"],
@@ -86,7 +88,7 @@ class Evenement:
                                 if "orateur_principal" in e
                                 else Evenement(
                                     e["titre"],
-                                    e["date"],
+                                    Date.fromisoformat(e["date"]),
                                     e["lieu"],
                                     e["capacite"],
                                     e["id_evenement"],
@@ -116,5 +118,3 @@ class Evenement:
 
         except FileNotFoundError:
             pass
-
->>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
