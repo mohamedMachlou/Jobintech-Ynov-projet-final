@@ -1,5 +1,5 @@
 from json import JSONDecodeError, dump, load
-from datetime import datetime as Datetime
+from datetime import datetime as Datetime, datetime as DatetimeType
 from typing import Optional
 from utils import find
 from utils.logger import error
@@ -17,6 +17,7 @@ class Vente:
         id_acheteur,
         type_billet,
         quantite,
+        date: Optional[DatetimeType] = None,
         id_vente: Optional[int] = None,
     ):
         self.id_vente = self._id if id_vente is None else id_vente
@@ -24,7 +25,7 @@ class Vente:
         self.id_acheteur = id_acheteur
         self.type_billet = type_billet
         self.quantite = quantite
-        self.date = Datetime.now()
+        self.date = Datetime.now() if date is None else date
         self.prix_total = (
             Billet.get_prix(type_billet, getattr(self.evenement, "prix_base", 0))
             * quantite
@@ -61,7 +62,12 @@ class Vente:
     @classmethod
     def _sync(cls):
         with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
-            dump([v.__dict__ for v in cls.ventes], f, indent=4, ensure_ascii=False)
+            dump(
+                [{**v.__dict__, "date": v.date.isoformat()} for v in cls.ventes],
+                f,
+                indent=4,
+                ensure_ascii=False,
+            )
 
     @classmethod
     def _load(cls):
@@ -73,6 +79,7 @@ class Vente:
                         v["id_acheteur"],
                         v["type_billet"],
                         v["quantite"],
+                        DatetimeType.fromisoformat(v["date"]),
                         v["id_vente"],
                     )
                     for v in load(f)
