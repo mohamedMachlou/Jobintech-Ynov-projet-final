@@ -1,0 +1,92 @@
+[
+    {
+        "id_acheteur": 1,
+        "nom": "Alice Dupont",
+        "email": "alice.dupont@gmail.com"
+    },
+    {
+        "id_acheteur": 2,
+        "nom": "Bob Martin",
+        "email": "bob.martin@gmail.com"
+    },
+    {
+        "id_acheteur": 3,
+        "nom": "Chloé Lefevre",
+        "email": "chloe.lefevre@gmail.com"
+    },
+    {
+        "id_acheteur": 4,
+        "nom": "Alice Dupont",
+        "email": "alice.dupont@gmail.com"
+    },
+    {
+        "id_acheteur": 5,
+        "nom": "Bob Martin",
+        "email": "bob.martin@gmail.com"
+    },
+    {
+        "id_acheteur": 6,
+        "nom": "Chloé Lefevre",
+        "email": "chloe.lefevre@gmail.com"
+    },
+    {
+        "id_acheteur": 7,
+        "nom": "Alice Dupont",
+        "email": "alice.dupont@gmail.com"
+    },
+    {
+        "id_acheteur": 8,
+        "nom": "Bob Martin",
+        "email": "bob.martin@gmail.com"
+    },
+    {
+        "id_acheteur": 9,
+        "nom": "Chloé Lefevre",
+        "email": "chloe.lefevre@gmail.com"
+    },
+    {
+        "id_acheteur": 10,
+        "nom": "Alice Dupont",
+        "email": "alice.dupont@gmail.com"
+    },
+    {
+        "id_acheteur": 11,
+        "nom": "Bob Martin",
+        "email": "bob.martin@gmail.com"
+    },
+    {
+        "id_acheteur": 12,
+        "nom": "Chloé Lefevre",
+        "email": "chloe.lefevre@gmail.com"
+    },
+    {
+        "id_acheteur": 13,
+        "nom": "Alice Dupont",
+        "email": "alice.dupont@gmail.com"
+    },
+    {
+        "id_acheteur": 14,
+        "nom": "Bob Martin",
+        "email": "bob.martin@gmail.com"
+    },
+    {
+        "id_acheteur": 15,
+        "nom": "Chloé Lefevre",
+        "email": "chloe.lefevre@gmail.com"
+    },
+    {
+        "id_acheteur": 16,
+        "nom": "Alice Dupont",
+        "email": "alice.dupont@gmail.com"
+    },
+    {
+        "id_acheteur": 17,
+        "nom": "Bob Martin",
+        "email": "bob.martin@gmail.com"
+    },
+    {
+        "id_acheteur": 18,
+        "nom": "Chloé Lefevre",
+        "email": "chloe.lefevre@gmail.com"
+    }
+]

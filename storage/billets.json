@@ -1,0 +1,182 @@
+[
+    {
+        "id_billet": 1,
+        "type_billet": "Standard",
+        "prix_base": 50,
+        "prix": 50.0
+    },
+    {
+        "id_billet": 2,
+        "type_billet": "VIP",
+        "prix_base": 50,
+        "prix": 75.0
+    },
+    {
+        "id_billet": 3,
+        "type_billet": "Standard",
+        "prix_base": 30,
+        "prix": 30.0
+    },
+    {
+        "id_billet": 4,
+        "type_billet": "VIP",
+        "prix_base": 30,
+        "prix": 45.0
+    },
+    {
+        "id_billet": 5,
+        "type_billet": "VIP",
+        "prix_base": 100,
+        "prix": 150.0
+    },
+    {
+        "id_billet": 6,
+        "type_billet": "Standard",
+        "prix_base": 50,
+        "prix": 50.0
+    },
+    {
+        "id_billet": 7,
+        "type_billet": "VIP",
+        "prix_base": 50,
+        "prix": 75.0
+    },
+    {
+        "id_billet": 8,
+        "type_billet": "Standard",
+        "prix_base": 30,
+        "prix": 30.0
+    },
+    {
+        "id_billet": 9,
+        "type_billet": "VIP",
+        "prix_base": 30,
+        "prix": 45.0
+    },
+    {
+        "id_billet": 10,
+        "type_billet": "VIP",
+        "prix_base": 100,
+        "prix": 150.0
+    },
+    {
+        "id_billet": 11,
+        "type_billet": "Standard",
+        "prix_base": 50,
+        "prix": 50.0
+    },
+    {
+        "id_billet": 12,
+        "type_billet": "VIP",
+        "prix_base": 50,
+        "prix": 75.0
+    },
+    {
+        "id_billet": 13,
+        "type_billet": "Standard",
+        "prix_base": 30,
+        "prix": 30.0
+    },
+    {
+        "id_billet": 14,
+        "type_billet": "VIP",
+        "prix_base": 30,
+        "prix": 45.0
+    },
+    {
+        "id_billet": 15,
+        "type_billet": "VIP",
+        "prix_base": 100,
+        "prix": 150.0
+    },
+    {
+        "id_billet": 16,
+        "type_billet": "Standard",
+        "prix_base": 50,
+        "prix": 50.0
+    },
+    {
+        "id_billet": 17,
+        "type_billet": "VIP",
+        "prix_base": 50,
+        "prix": 75.0
+    },
+    {
+        "id_billet": 18,
+        "type_billet": "Standard",
+        "prix_base": 30,
+        "prix": 30.0
+    },
+    {
+        "id_billet": 19,
+        "type_billet": "VIP",
+        "prix_base": 30,
+        "prix": 45.0
+    },
+    {
+        "id_billet": 20,
+        "type_billet": "VIP",
+        "prix_base": 100,
+        "prix": 150.0
+    },
+    {
+        "id_billet": 21,
+        "type_billet": "Standard",
+        "prix_base": 50,
+        "prix": 50.0
+    },
+    {
+        "id_billet": 22,
+        "type_billet": "VIP",
+        "prix_base": 50,
+        "prix": 75.0
+    },
+    {
+        "id_billet": 23,
+        "type_billet": "Standard",
+        "prix_base": 30,
+        "prix": 30.0
+    },
+    {
+        "id_billet": 24,
+        "type_billet": "VIP",
+        "prix_base": 30,
+        "prix": 45.0
+    },
+    {
+        "id_billet": 25,
+        "type_billet": "VIP",
+        "prix_base": 100,
+        "prix": 150.0
+    },
+    {
+        "id_billet": 26,
+        "type_billet": "Standard",
+        "prix_base": 50,
+        "prix": 50.0
+    },
+    {
+        "id_billet": 27,
+        "type_billet": "VIP",
+        "prix_base": 50,
+        "prix": 75.0
+    },
+    {
+        "id_billet": 28,
+        "type_billet": "Standard",
+        "prix_base": 30,
+        "prix": 30.0
+    },
+    {
+        "id_billet": 29,
+        "type_billet": "VIP",
+        "prix_base": 30,
+        "prix": 45.0
+    },
+    {
+        "id_billet": 30,
+        "type_billet": "VIP",
+        "prix_base": 100,
+        "prix": 150.0
+    }
+]

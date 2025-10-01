@@ -1,9 +1,10 @@
-from ..models.concert import Concert
+from models import Concert
 
 # l'Ajout d'un nouveau concert
 def ajout_nouveau_concert(id_evenement, titre, date, lieu, capacite, artiste):
     new_concert = Concert(id_evenement, titre, date, lieu, capacite, artiste)
     Concert.toutes_concerts.append(new_concert)
+    print('ajout works !!!!')
     return new_concert
 
 
@@ -20,7 +21,6 @@ def update_concert(id_evenement, date, lieu):
         return None
 
 
-
 # Supprimer un concert
 def delete_concert(id_evenement):
     nombre_initial = len(Concert.toutes_concerts)
@@ -32,3 +32,12 @@ def delete_concert(id_evenement):
     else:
         print(f'Aucun concert trouvé avec ID d\'Evenement [{id_evenement}]!')
         return False
+
+
+
+
+
+
+
+
+
