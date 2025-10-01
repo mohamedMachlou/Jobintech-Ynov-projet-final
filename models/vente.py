@@ -65,6 +65,3 @@ class Vente:
             error("Error while trying to load ventes json data, using empty data")
         except FileNotFoundError:
             pass
-
-
-Vente._load()

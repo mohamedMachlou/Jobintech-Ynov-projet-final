@@ -111,5 +111,3 @@ class Evenement:
         except FileNotFoundError:
             pass
 
-
-Evenement._load()
