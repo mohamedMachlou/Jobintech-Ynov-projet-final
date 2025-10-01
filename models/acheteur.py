@@ -35,10 +35,10 @@ class Acheteur:
         try:
             with open("storage/acheteurs.json") as f:
                 cls.achateurs = list(
-                        map(
-                            lambda a: Acheteur(a["nom"], a["email"], a["id_acheteur"]),
-                            load(f),
-                        ),
+                    map(
+                        lambda a: Acheteur(a["nom"], a["email"], a["id_acheteur"]),
+                        load(f),
+                    ),
                 )
                 max_id = (
                     0
@@ -60,6 +60,3 @@ class Acheteur:
 
         except FileNotFoundError:
             pass
-
-
-Acheteur._load()

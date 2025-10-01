@@ -50,3 +50,71 @@ class Evenement:
                 indent=4,
                 ensure_ascii=False
             )
+<<<<<<< HEAD
+=======
+
+    @classmethod
+    def _load(cls):
+        from models.concert import Concert
+        from models.conference import Conference
+
+        try:
+            with open("storage/evenements.json") as f:
+                cls.evenements = list(
+                    map(
+                        lambda e: (
+                            Concert(
+                                e["titre"],
+                                e["date"],
+                                e["lieu"],
+                                e["capacite"],
+                                e["artiste"],
+                                e["id_evenement"],
+                                e["places_vendues"],
+                            )
+                            if "artiste" in e
+                            else (
+                                Conference(
+                                    e["titre"],
+                                    e["date"],
+                                    e["lieu"],
+                                    e["capacite"],
+                                    e["orateur_principal"],
+                                    e["id_evenement"],
+                                    e["places_vendues"],
+                                )
+                                if "orateur_principal" in e
+                                else Evenement(
+                                    e["titre"],
+                                    e["date"],
+                                    e["lieu"],
+                                    e["capacite"],
+                                    e["id_evenement"],
+                                    e["places_vendues"],
+                                )
+                            )
+                        ),
+                        load(f),
+                    )
+                )
+                max_id = (
+                    0
+                    if (
+                        max_id_element := max(
+                            cls.evenements, default=None, key=lambda e: e.id_evenement
+                        )
+                    )
+                    is None
+                    else max_id_element.id_evenement
+                )
+                cls._id = max_id + 1
+
+        except (JSONDecodeError, TypeError, KeyError):
+            error(
+                "Error while trying to load json data, the program is using empty data for now"
+            )
+
+        except FileNotFoundError:
+            pass
+
+>>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1

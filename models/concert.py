@@ -1,13 +1,19 @@
+<<<<<<< HEAD
 from json import dump, load, JSONDecodeError
+=======
+>>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
 from typing import Optional
 from .evenement import Evenement
 from datetime import date as DateType
 
 
 class Concert(Evenement):
+<<<<<<< HEAD
     concerts = []  # Liste pour stocker tous les concerts
     _id = 1
     STORAGE_FILE = "storage/concerts.json"
+=======
+>>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
 
     def __init__(
         self,
@@ -19,16 +25,22 @@ class Concert(Evenement):
         _id: Optional[int] = None,
         places_vendues: Optional[int] = None,
     ):
+<<<<<<< HEAD
         # ID auto-incrémenté
         self.id_evenement = Concert._id if _id is None else _id
         super().__init__(titre, date_evenement, lieu, capacite, self.id_evenement, places_vendues)
+=======
+>>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
         self.artiste = artiste
 
+<<<<<<< HEAD
         # Ajouter à la liste et synchroniser JSON
         Concert.concerts.append(self)
         Concert._id += 1
         self._sync()
 
+=======
+>>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
     def __str__(self):
         return super().__str__() + f" - Artiste: {self.artiste}"
 

@@ -81,6 +81,3 @@ class Billet:
 
         except FileNotFoundError:
             pass
-
-
-Billet._load()

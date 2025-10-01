@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from services import ajout_nouveau_concert, update_concert, delete_concert
 from models import Concert
 from datetime import date
@@ -45,3 +46,19 @@ for c in Concert.concerts:
 ##################################################################
 ################## End Concert Test #############################
 ##################################################################
+=======
+from services.main_menu import main_menu
+import seeders.main as _
+import utils.data_loader as _
+
+
+def main():
+    try:
+        main_menu()
+    except:
+        pass
+
+
+if __name__ == "__main__":
+    main()
+>>>>>>> ad4ac08be5a80f6af9bec039c0384266abc937c1
