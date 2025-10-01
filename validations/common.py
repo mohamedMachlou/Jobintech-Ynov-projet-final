@@ -34,12 +34,11 @@ def validate_required(valeur):
     return True
 
 
-def validate_int(valeur):
-    try:
-        int(valeur)
+def validate_int(valeur: str):
+    if valeur.isdigit():
         return True
-    except ValueError:
-        return "Veuillez entrer un nombre entier valide."
+
+    return "Veuillez entrer un nombre entier valide."
 
 
 def validate_float(valeur):
@@ -48,3 +47,29 @@ def validate_float(valeur):
         return True
     except ValueError:
         return "Veuillez entrer un nombre valide (décimal possible)."
+
+
+def validate_gt(value, target: int):
+    if isinstance(v := validate_int(value), str):
+        return v
+
+    _value = int(value)
+
+    return (
+        True
+        if _value > target
+        else f"Veuillez entrer un nombre valide superieur a {target}"
+    )
+
+
+def validate_lte(value, target: int):
+    if isinstance(v := validate_int(value), str):
+        return v
+
+    _value = int(value)
+
+    return (
+        True
+        if int(_value) <= target
+        else f"Veuillez entrer un nombre valide inferieur ou egal a {target}"
+    )
