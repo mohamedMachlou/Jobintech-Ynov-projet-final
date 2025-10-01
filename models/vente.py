@@ -1,11 +1,14 @@
 from json import JSONDecodeError, dump, load
+from datetime import datetime as Datetime
 from typing import Optional
+from utils import find
 from utils.logger import error
 from models.billet import Billet
 
 
 class Vente:
     ventes = []
+    STORAGE_FILE = "storage/ventes.json"
     _id = 1
 
     def __init__(
@@ -21,25 +24,49 @@ class Vente:
         self.id_acheteur = id_acheteur
         self.type_billet = type_billet
         self.quantite = quantite
-        self.prix_total = Billet.get_prix(type_billet, 0) * quantite
+        self.date = Datetime.now()
+        self.prix_total = (
+            Billet.get_prix(type_billet, getattr(self.evenement, "prix_base", 0))
+            * quantite
+        )
         Vente._id += 1
         Vente.ventes.append(self)
         self._sync()
+
+        if self.evenement:
+            self.evenement.places_vendues += 1
+            self.evenement._sync()
 
     def delete(self):
         if self in Vente.ventes:
             Vente.ventes.remove(self)
             self._sync()
 
+        if self.evenement:
+            self.evenement.places_vendues += 1
+            self.evenement._sync()
+
+    @property
+    def evenement(self):
+        from models.evenement import Evenement
+
+        return find(Evenement.evenements, lambda e: e.id_evenement == self.id_evenement)
+
+    @property
+    def acheteur(self):
+        from models.acheteur import Acheteur
+
+        return find(Acheteur.achateurs, lambda a: a.id_acheteur == self.id_acheteur)
+
     @classmethod
     def _sync(cls):
-        with open("storage/ventes.json", "w+", encoding="utf-8") as f:
+        with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
             dump([v.__dict__ for v in cls.ventes], f, indent=4, ensure_ascii=False)
 
     @classmethod
     def _load(cls):
         try:
-            with open("storage/ventes.json", "r", encoding="utf-8") as f:
+            with open(cls.STORAGE_FILE, "r", encoding="utf-8") as f:
                 cls.ventes = [
                     Vente(
                         v["id_evenement"],
