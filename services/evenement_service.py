@@ -2,7 +2,7 @@ from utils.inputs import select
 
 
 def gestion_evenements_menu():
-    from services.main_menu import main_menu
+    from services.main import main_menu
 
     GESTION_EVENEMENTS_CHOICES = {
         "Gestion des Concerts": lambda: print("TODO: for concert"),

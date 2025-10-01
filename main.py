@@ -1,4 +1,4 @@
-from services.main_menu import main_menu
+from services.main import main_menu
 import seeders.main as _
 import utils.data_loader as _
 

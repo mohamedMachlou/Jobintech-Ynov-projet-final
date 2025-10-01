@@ -1,5 +1,5 @@
 from services.acheteur_service import faire_des_achats_menu
-from services.evenements import gestion_evenements_menu
+from services.evenement_service import gestion_evenements_menu
 from utils.clear import clear
 from utils.inputs import select
 

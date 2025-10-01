@@ -5,7 +5,7 @@ from validations.common import validate_required
 
 
 def faire_des_achats_menu():
-    from services.main_menu import main_menu
+    from services.main import main_menu
 
     FAIRE_ACHATS_CHOICES = {
         "Nouveau Acheteur": acheteur_registration,
@@ -35,7 +35,7 @@ def list_achateur_billets(acheteur: Acheteur):
 
 
 def acheteur_action_selection_menu(acheteur: Acheteur):
-    from services.main_menu import main_menu
+    from services.main import main_menu
 
     ACHETEUR_ACTION_SELECTION_CHOICES = {
         "List My Tickets": list_achateur_billets,
