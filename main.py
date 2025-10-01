@@ -14,3 +14,23 @@ from services import concert
 #     main()
 
 
+from services import ajout_nouveau_concert, update_concert, delete_concert
+from models import Concert
+
+# Ajout de concerts
+c1 = ajout_nouveau_concert(1, "Rock Night", "2025-12-20", "Casablanca", 500, "Coldplay")
+c2 = ajout_nouveau_concert(2, "Jazz Evening", "2025-11-10", "Rabat", 300, "Norah Jones")
+
+# Afficher les concerts
+for c in Concert.toutes_concerts:
+    print(c)
+
+# Mise à jour
+update_concert(1, "2025-12-25", "Marrakech")
+
+# Suppression
+delete_concert(2)
+
+# Affichage final
+for c in Concert.toutes_concerts:
+    print(c)
