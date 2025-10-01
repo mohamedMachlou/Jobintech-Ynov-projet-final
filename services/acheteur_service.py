@@ -1,4 +1,5 @@
 from models.acheteur import Acheteur
+from services.vente_service import list_achateur_ventes_menu, make_a_vente_menu
 from utils.inputs import input, select
 from validations.acheteur import validate_acheteur_email
 from validations.common import validate_required
@@ -29,18 +30,14 @@ def acheteur_registration():
     acheteur_action_selection_menu(Acheteur(name, email))
 
 
-def list_achateur_billets(acheteur: Acheteur):
-    # TODO: list acheteur's tickets & forward them back to acheteur_action_selection menu
-    pass
-
-
 def acheteur_action_selection_menu(acheteur: Acheteur):
     from services.main import main_menu
 
     ACHETEUR_ACTION_SELECTION_CHOICES = {
-        "List My Tickets": list_achateur_billets,
-        "Buy Ticket(s)": lambda: print("TODO: Buy"),
-        "Unbuy Ticket(s)": lambda: print("TODO: unbuy"),
+        "Lister & Manage Mes Ventes/Tickets": lambda: list_achateur_ventes_menu(
+            acheteur
+        ),
+        "Buy Ticket": lambda: make_a_vente_menu(acheteur),
         "Retour": main_menu,
     }
 
