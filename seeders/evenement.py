@@ -24,6 +24,7 @@ data = [
         "orateur_principal": "Dr. Jeanne Dupont",
     },
     {
+        "orateur_principal": "Prof. Jean Martin",
         "titre": "Salon du Livre",
         "date": "2025-12-01",
         "lieu": "Centre Culturel",
