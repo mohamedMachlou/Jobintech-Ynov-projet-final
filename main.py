@@ -4,8 +4,10 @@ import utils.data_loader as _ # keep loader before seeders
 
 
 def main():
-    main_menu()
-
+    try :
+        main_menu()
+    except :
+        pass
 
 
 if __name__ == "__main__":
