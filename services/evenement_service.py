@@ -119,17 +119,19 @@ def maj_evenement_menu():
                     break
 
                 # Demander à l'utilisateur de préciser avec l'ID
-                identifiant = input(
+                while identifiant := input(
                     "Plusieurs événements correspondent, tapez l'ID exact de l'événement souhaité :",
                     validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
-                )
-                identifiant = int(identifiant)
+                    ):
+                    identifiant = int(identifiant)
 
-                evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
+                    evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
+                    if evenement:
+                        break
+                    else:
+                        error("ID invalide, veuillez réessayer.")
                 if evenement:
                     break
-                else:
-                    error("ID invalide, veuillez réessayer.")
 
         # Si un événement a été trouvé on sort de la boucle principale
         if evenement:
