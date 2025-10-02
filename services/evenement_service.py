@@ -1,3 +1,6 @@
+import datetime
+
+from models import Concert, Conference
 from utils.inputs import select, input
 from validations.evenement import (
     validate_chaine,
@@ -72,7 +75,9 @@ def ajouter_evenement_menu():
     date_event = input(
         "Date du concert (YYYY-MM-DD)",
         validate=lambda d: validate_date(d, future_only=True)
+
     )
+    date_event = datetime.datetime.fromisoformat(date_event)
 
     lieu = input("Lieu du concert", validate=validate_chaine)
     prix_base = input("Prix de base", validate=validate_float)
@@ -81,10 +86,10 @@ def ajouter_evenement_menu():
 
     # Création de l'événement selon le type choisi
     if choix == "Concert":
-        ajout_nouveau_concert(titre, date_event, lieu, prix_base, capacite, artiste)
+        Concert(titre, date_event, lieu, prix_base, capacite, artiste)
     elif choix == "Conférence":
         conférencier = input("Nom du conférencier", validate=validate_chaine)
-        ajout_nouvelle_conference(titre, date_event, lieu, capacite, conférencier)
+        Conference(titre, date_event, lieu, capacite, conférencier)
 
 
 

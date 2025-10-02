@@ -4,11 +4,8 @@ import seeders.main as _
 
 
 def main():
-    try:
+    main_menu()
 
-        main_menu()
-    except:
-        pass
 
 
 if __name__ == "__main__":
