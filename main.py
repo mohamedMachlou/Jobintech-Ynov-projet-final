@@ -5,6 +5,7 @@ import seeders.main as _
 
 def main():
     try:
+
         main_menu()
     except:
         pass
