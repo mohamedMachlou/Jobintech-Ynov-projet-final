@@ -36,8 +36,10 @@ class Vente:
         self._sync()
 
         if self.evenement:
-            self.evenement.places_vendues += 1
+            self.evenement.places_vendues += quantite
             self.evenement._sync()
+
+
 
     def delete(self):
         if self in Vente.ventes:
@@ -104,7 +106,7 @@ class Vente:
                 [v.to_dict() for v in cls.ventes],
                 f,
                 indent=4,
-                ensure_ascii=False,
+                ensure_ascii=True,
             )
 
     @classmethod

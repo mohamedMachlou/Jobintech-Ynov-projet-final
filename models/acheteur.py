@@ -37,7 +37,7 @@ class Acheteur:
                 list(map(lambda a: a.__dict__, cls.achateurs)),
                 f,
                 indent=4,
-                ensure_ascii=False,
+                ensure_ascii=True,
             )
 
     @classmethod
