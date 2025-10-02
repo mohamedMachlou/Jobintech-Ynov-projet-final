@@ -4,10 +4,6 @@ from validations.concert import validate_concert_data
 
 # Ajout d'un nouveau concert
 def ajout_nouveau_concert(titre, date, lieu,prix_base, capacite, artiste):
-    # errors = validate_concert_data(titre, date, lieu,prix_base, capacite, artiste)
-    # if errors:
-    #     print("Erreur de validation :", errors)
-    #     return None
 
     new_concert = Concert(titre, date, lieu,prix_base, capacite, artiste)
     print("Ajout réussi !")
