@@ -8,6 +8,7 @@ from utils.logger import error
 
 class Evenement:
     evenements = []
+    __unserializable__ = {}
     _id = 1
     STORAGE_FILE = "storage/evenements.json"
 
@@ -27,7 +28,7 @@ class Evenement:
         self.prix_base = prix_base
         self.lieu = lieu
         self.capacite = capacite
-        self.places_vendues = places_vendues if places_vendues is not None else 0
+        self._places_vendues = places_vendues if places_vendues is not None else 0
 
         if self not in Evenement.evenements:
             Evenement.evenements.append(self)
@@ -47,7 +48,21 @@ class Evenement:
 
     @property
     def places_restantes(self):
-        return self.capacite - self.places_vendues
+        return self.capacite - self._places_vendues
+
+    @property
+    def places_vendues(self):
+        return self._places_vendues
+
+    @places_vendues.setter
+    def places_vendues(self, p: int):
+        if not p <= self.capacite:
+            raise ValueError(
+                f"Reserved places exceeed the capacity, reservations assigned: {p} , capacity :{self.capacite}."
+            )
+
+        self._places_vendues = p
+        Evenement._sync()
 
     def delete(self):
         if self in Evenement.evenements:
@@ -58,7 +73,7 @@ class Evenement:
     def _sync(cls):
         with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
             dump(
-                [{**e.__dict__, "date": e.date.isoformat()} for e in cls.evenements],
+                [e.to_dict() for e in cls.evenements],
                 f,
                 indent=4,
                 ensure_ascii=False,
@@ -130,3 +145,24 @@ class Evenement:
 
         except FileNotFoundError:
             pass
+
+    def to_dict(self):
+        data = {}
+
+        for k, v in self.__dict__.items():
+            new_key = k[1:] if k.startswith("_") else k
+            data[new_key] = v
+
+        for name, attr in vars(self.__class__).items():
+            if (
+                isinstance(attr, property)
+                and name not in data
+                and name not in self.__unserializable__
+            ):
+                value = getattr(self, name)
+                data[name] = value
+
+        if "date" in data and hasattr(data["date"], "isoformat"):
+            data["date"] = data["date"].isoformat()
+
+        return data
