@@ -6,7 +6,7 @@ def gestion_evenements_menu():
 
     GESTION_EVENEMENTS_CHOICES = {
         "Gestion des Concerts": lambda: print("TODO: for concert"),
-        "Gestion des ": lambda: print("TODO: for conferences"),
+        "Gestion des Conferences": lambda: print("TODO: for conferences"),
         "Gestion des utilisateurs": lambda: print("Utilisateurs logic here..."),
         "Retour": main_menu,
     }
