@@ -80,7 +80,7 @@ def generer_rapport_financier_et_frequentation(
     plt.savefig(save_path)
     plt.close()
 
-    print("====== Rapport généré ======")
+    print("====== Analyse et Rapports ======")
 
     # Titre et revenu par type d'événement
     revenu_type = "Revenu par type d'événement"
