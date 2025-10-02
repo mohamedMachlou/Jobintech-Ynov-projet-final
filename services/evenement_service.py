@@ -19,12 +19,14 @@ def gestion_evenements_menu():
     from services.main import main_menu
 
     GESTION_EVENEMENTS_CHOICES = {
-        "Recherche des Evenements": recherche_evenements_par_personne,
         "Ajouter un Evenement": ajouter_evenement_menu,
+        "Recherche des Evenements": recherche_evenements_par_personne,
+        "Lister des Evenements": lister_evenements,
         "Mis à jour un Evenement": maj_evenement_menu,
-        # "Annuler un Evenement": annuler_evenement_menu,
+        "Annuler un Evenement": annuler_evenement_menu,
         "Retour": main_menu,
     }
+
     choice = select(
         " ",
         choices=list(GESTION_EVENEMENTS_CHOICES.keys()),
@@ -223,6 +225,134 @@ def recherche_evenements_par_personne():
         return gestion_evenements_menu()
 
 
+
+def lister_evenements():
+    total = len(Evenement.evenements)
+
+    if total == 0:
+        print(" Aucun événement trouvé.")
+        return gestion_evenements_menu()
+
+    print(f"\n Nombre total d'événements : {total}\n")
+
+    page = 0
+    taille_page = 10
+
+    while True:
+        start = page * taille_page
+        end = start + taille_page
+        sous_liste = Evenement.evenements[start:end]
+
+        # Affichage
+        for e in sous_liste:
+            print(f"ID {e.id_evenement} | {e.titre} | {e.date.date()} | {e.lieu}")
+
+        # Vérifier si fin de la liste
+        if end >= total:
+            print("\n Fin de la liste des événements.")
+            break
+
+        # Options pour l'utilisateur
+        choix = select(
+            "\nQue voulez-vous faire ?",
+            ["Voir les 10 suivants", "Retour au menu"]
+        )
+
+        if choix == "Voir les 10 suivants":
+            page += 1
+        else:
+            return gestion_evenements_menu()
+
+    # Retour auto au menu une fois tout affiché
+    return gestion_evenements_menu()
+
+
+
+
+
+
+def annuler_evenement_menu():
+    while True:  # boucle jusqu'à ce qu'un événement valide soit trouvé
+        # Choix du mode de recherche
+        mode_recherche = select("Rechercher l'événement à annuler par :", ["ID", "Titre"])
+        evenement = None
+
+        if mode_recherche == "ID":
+            while True:
+                identifiant = input(
+                    "Saisir l'ID de l'événement : ",
+                    validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
+                )
+                identifiant = int(identifiant)
+
+                evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant), None)
+                if evenement:
+                    break
+                else:
+                    print(" Aucun événement trouvé avec cet ID, veuillez réessayer.")
+
+        else:  # Recherche par Titre
+            while True:
+                titre_recherche = input(
+                    "Saisir le titre de l'événement : ",
+                    validate=validate_chaine
+                ).lower()
+
+                # Recherche partielle insensible à la casse
+                evenements_trouves = [
+                    e for e in Evenement.evenements if titre_recherche in e.titre.lower()
+                ]
+
+                total_trouves = len(evenements_trouves)
+                if total_trouves == 0:
+                    print(" Aucun événement trouvé avec ce titre. Veuillez réessayer.")
+                    continue
+
+                print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
+
+                # Afficher au maximum 5 événements
+                for e in evenements_trouves[:5]:
+                    print(f"ID {e.id_evenement} | {e.titre} | {e.date.date()} | {e.lieu}")
+
+                if total_trouves == 1:
+                    evenement = evenements_trouves[0]
+                    break
+
+                # Demander à l'utilisateur de préciser avec l'ID
+                identifiant = input(
+                    "Plusieurs événements correspondent, tapez l'ID exact de l'événement souhaité : ",
+                    validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
+                )
+                identifiant = int(identifiant)
+
+                evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
+                if evenement:
+                    break
+                else:
+                    print(" ID invalide, veuillez réessayer.")
+
+        # Si un événement a été trouvé on sort de la boucle principale
+        if evenement:
+            break
+
+    # Vérification finale
+    print(f"\n Événement trouvé : {evenement}\n")
+
+    # Confirmation avant suppression
+    confirmation = select(
+        f"Voulez-vous vraiment annuler (supprimer) l'événement '{evenement.titre}' ?",
+        ["Oui", "Non"]
+    )
+
+    if confirmation == "Oui":
+        Evenement.evenements.remove(evenement)
+        Evenement._sync()
+        print(f" Événement '{evenement.titre}' supprimé avec succès !")
+    else:
+        print(" Annulation de la suppression, l'événement reste inchangé.")
+
+    # Retour au menu principal
+    return gestion_evenements_menu()
 
 
 
