@@ -69,63 +69,73 @@ def ajouter_evenement_menu():
     gestion_evenements_menu()
 
 
-
 def maj_evenement_menu():
-    # Choix du mode de recherche
-    mode_recherche = select("Rechercher l'événement par :", ["ID", "Titre"])
+    while True:  # boucle jusqu'à ce qu'un événement valide soit trouvé
+        # Choix du mode de recherche
+        mode_recherche = select("Rechercher l'événement par :", ["ID", "Titre"])
+        evenement = None
 
-    evenement = None
+        if mode_recherche == "ID":
+            while True:
+                identifiant = input(
+                    "Saisir l'ID de l'événement : ",
+                    validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
+                )
+                identifiant = int(identifiant)
 
-    if mode_recherche == "ID":
-        identifiant = int(input(
-            "Saisir l'ID de l'événement : ",
-            validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
-        ))
-        evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant), None)
-    else:
-        while True:
-            titre_recherche = input(
-                "Saisir le titre de l'événement : ",
-                validate=validate_chaine
-            ).lower()
+                evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant), None)
+                if evenement:
+                    break
+                else:
+                    print(" Aucun événement trouvé avec cet ID, veuillez réessayer.")
+            # fin recherche par ID
 
-            # Recherche partielle insensible à la casse
-            evenements_trouves = [
-                e for e in Evenement.evenements if titre_recherche in e.titre.lower()
-            ]
+        else:  # Recherche par Titre
+            while True:
+                titre_recherche = input(
+                    "Saisir le titre de l'événement : ",
+                    validate=validate_chaine
+                ).lower()
 
-            total_trouves = len(evenements_trouves)
-            if total_trouves == 0:
-                print("Aucun événement trouvé avec ce titre. Veuillez réessayer.")
-                continue
+                # Recherche partielle insensible à la casse
+                evenements_trouves = [
+                    e for e in Evenement.evenements if titre_recherche in e.titre.lower()
+                ]
 
-            print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
+                total_trouves = len(evenements_trouves)
+                if total_trouves == 0:
+                    print(" Aucun événement trouvé avec ce titre. Veuillez réessayer.")
+                    continue
 
-            # Afficher au maximum 5 événements
-            for e in evenements_trouves[:5]:
-                print(f"ID {e.id_evenement} | {e.titre} | {e.date.date()} | {e.lieu}")
+                print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
 
-            if total_trouves == 1:
-                evenement = evenements_trouves[0]
-                break
+                # Afficher au maximum 5 événements
+                for e in evenements_trouves[:5]:
+                    print(f"ID {e.id_evenement} | {e.titre} | {e.date.date()} | {e.lieu}")
 
-            # Demander à l'utilisateur de préciser avec l'ID
-            identifiant = int(input(
-                "Plusieurs événements correspondent, tapez l'ID exact de l'événement souhaité : ",
-                validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
-            ))
-            evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
-            if evenement:
-                break
-            else:
-                print("ID invalide, veuillez réessayer.")
+                if total_trouves == 1:
+                    evenement = evenements_trouves[0]
+                    break
 
-    # Vérification
-    if not evenement:
-        print("Événement introuvable !")
-        return
+                # Demander à l'utilisateur de préciser avec l'ID
+                identifiant = input(
+                    "Plusieurs événements correspondent, tapez l'ID exact de l'événement souhaité : ",
+                    validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
+                )
+                identifiant = int(identifiant)
 
-    print(f"Événement trouvé : {evenement}")
+                evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
+                if evenement:
+                    break
+                else:
+                    print(" ID invalide, veuillez réessayer.")
+
+        # Si un événement a été trouvé on sort de la boucle principale
+        if evenement:
+            break
+
+    # Vérification finale
+    print(f" Événement trouvé : {evenement}")
 
     # Saisie des nouvelles valeurs
     nouvelle_date_str = input(
@@ -146,9 +156,10 @@ def maj_evenement_menu():
     # Sauvegarde
     Evenement._sync()
 
-    print(f"Événement '{evenement.titre}' mis à jour avec succès !")
+    print(f" Événement '{evenement.titre}' mis à jour avec succès !")
 
-    gestion_evenements_menu()
+    # Retour au menu principal
+    return gestion_evenements_menu()
 
 
 
