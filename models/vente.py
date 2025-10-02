@@ -35,8 +35,9 @@ class Vente:
         Vente.ventes.append(self)
         self._sync()
 
-        if self.evenement:
-            self.evenement._sync()
+        # means creation not loading
+        if id_vente is None and self.evenement:
+            self.evenement.places_vendues += 1
 
 
 
@@ -46,8 +47,7 @@ class Vente:
             self._sync()
 
         if self.evenement:
-            self.evenement.places_vendues += 1
-            self.evenement._sync()
+            self.evenement.places_vendues -= 1
 
     @property
     def quantite(self):

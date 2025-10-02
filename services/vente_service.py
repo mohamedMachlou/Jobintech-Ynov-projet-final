@@ -1,7 +1,6 @@
 from datetime import datetime as Datetime
 from logging import error
 from typing import cast
-from models import evenement
 from models.acheteur import Acheteur
 from models.billet import Billet
 from models.evenement import Evenement
@@ -29,8 +28,6 @@ def update_vente_action(vente: Vente):
 
     new_type_billet = TICKET_TYPE_CHOICES[type_billet_choice]
 
-    print("places restant:", evenement.places_restantes)
-    print("qty", vente.quantite)
 
     new_qty = input(
         "How much ticket do you want to buy",
