@@ -6,7 +6,7 @@ from models.conference import Conference
 
 data = [
     {
-        "titre": "Concert Rock",
+        "titre": "Concert Musk",
         "date": "2025-10-10",
         "lieu": "Stade Olympique",
         "capacite": 5000,
@@ -24,7 +24,7 @@ data = [
         "orateur_principal": "Dr. Jeanne Dupont",
     },
     {
-        "orateur_principal": "Prof. Jean Martin",
+        "orateur_principal": "Prof Martin",
         "titre": "Salon du Livre",
         "date": "2025-12-01",
         "lieu": "Centre Culturel",
