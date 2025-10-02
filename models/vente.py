@@ -36,7 +36,6 @@ class Vente:
         self._sync()
 
         if self.evenement:
-            self.evenement.places_vendues += quantite
             self.evenement._sync()
 
 

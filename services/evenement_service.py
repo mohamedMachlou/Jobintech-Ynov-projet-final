@@ -62,10 +62,10 @@ def ajouter_evenement_menu():
     # Création de l'événement selon le type choisi
     if choix == "Concert":
         artiste = input("Nom d'Artiste :", validate=validate_chaine)
-        Concert(titre, date_event, lieu, prix_base, capacite, artiste)
+        Concert(titre, date_event, lieu, float(prix_base), int(capacite), artiste)
     elif choix == "Conférence":
         conférencier = input("Nom du conférencier :", validate=validate_chaine)
-        Conference(titre, date_event, lieu,prix_base, capacite, conférencier)
+        Conference(titre, date_event, lieu, float(prix_base), int(capacite), conférencier)
 
     gestion_evenements_menu()
 

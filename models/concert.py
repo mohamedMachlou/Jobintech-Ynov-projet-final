@@ -9,7 +9,7 @@ class Concert(Evenement):
         titre: str,
         date_event: DatetimeType,
         lieu: str,
-        prix_base: int,
+        prix_base: float,
         capacite: int,
         artiste: str,
         _id: Optional[int] = None,

@@ -1,14 +1,10 @@
-import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from tabulate import tabulate
-from pathlib import Path
 from models import Evenement, Vente
 
 def generer_rapport_financier_et_frequentation(
-        ventes_path="storage/ventes.json",
-        evenements_path="storage/evenements.json",
         save_path="storage/rapport_ventes.png"
     ):
     from services.main import main_menu

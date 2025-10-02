@@ -9,7 +9,7 @@ class Conference(Evenement):
         titre: str,
         date_event: DatetimeType,
         lieu: str,
-        prix_base: int,
+        prix_base: float,
         capacite: int,
         orateur_principal: str,
         _id: Optional[int] = None,

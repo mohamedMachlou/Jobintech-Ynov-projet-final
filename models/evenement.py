@@ -17,7 +17,7 @@ class Evenement:
         titre: str,
         date_event: DatetimeType,
         lieu: str,
-        prix_base: int,
+        prix_base: float,
         capacite: int,
         _id: Optional[int] = None,
         places_vendues: Optional[int] = None,
