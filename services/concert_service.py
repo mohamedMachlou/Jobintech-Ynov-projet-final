@@ -1,13 +1,11 @@
 from models.concert import Concert
-from models import evenement
-from validations.concert import validate_concert_data
+from utils.logger import success
 
 # Ajout d'un nouveau concert
 def ajout_nouveau_concert(titre, date, lieu,prix_base, capacite, artiste):
 
     new_concert = Concert(titre, date, lieu,prix_base, capacite, artiste)
-    print("Ajout réussi !")
-    evenement.Evenement.create_new_event(new_concert)
+    success("Ajout réussi !")
     return new_concert
 
 # Mise à jour d'un concert

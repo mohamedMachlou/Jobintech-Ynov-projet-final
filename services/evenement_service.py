@@ -3,6 +3,7 @@ from models import Evenement
 from models import Concert, Conference
 from dateutil.parser import parse
 from utils.inputs import select, input
+from utils.logger import error, info, success
 from validations.evenement import (
     validate_chaine,
     validate_date,
@@ -42,30 +43,28 @@ def ajouter_evenement_menu():
 
 
     # Saisie des informations avec validations correctes
-    titre = input("Taper le Titre d'Evenement", validate=validate_chaine)
+    titre = input("Taper le Titre d'Evenement :", validate=validate_chaine)
 
     from dateutil.parser import parse
 
     date_event_str = input(
-        "Date du concert (YYYY-MM-DD)",
+            "Date du concert (YYYY-MM-DD) :",
         validate=lambda d: validate_date(d, future_only=True)
     )
 
     # Convertir en objet datetime
     date_event = parse(date_event_str)
 
-    lieu = input("Lieu du concert", validate=validate_chaine)
-    prix_base = input("Prix de base", validate=validate_float)
-    capacite = input("Capacité", validate=validate_int)
+    lieu = input("Lieu du concert :", validate=validate_chaine)
+    prix_base = input("Prix de base :", validate=validate_float)
+    capacite = input("Capacité :", validate=validate_int)
 
     # Création de l'événement selon le type choisi
     if choix == "Concert":
-        print('choix de concert')
-        artiste = input("Artiste", validate=validate_chaine)
+        artiste = input("Nom d'Artiste :", validate=validate_chaine)
         Concert(titre, date_event, lieu, prix_base, capacite, artiste)
     elif choix == "Conférence":
-        print('choix de conference')
-        conférencier = input("Nom du conférencier", validate=validate_chaine)
+        conférencier = input("Nom du conférencier :", validate=validate_chaine)
         Conference(titre, date_event, lieu,prix_base, capacite, conférencier)
 
     gestion_evenements_menu()
@@ -80,7 +79,7 @@ def maj_evenement_menu():
         if mode_recherche == "ID":
             while True:
                 identifiant = input(
-                    "Saisir l'ID de l'événement : ",
+                    "Saisir l'ID de l'événement :",
                     validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
                 )
                 identifiant = int(identifiant)
@@ -89,13 +88,13 @@ def maj_evenement_menu():
                 if evenement:
                     break
                 else:
-                    print(" Aucun événement trouvé avec cet ID, veuillez réessayer.")
+                    info("Aucun événement trouvé avec cet ID, veuillez réessayer.")
             # fin recherche par ID
 
         else:  # Recherche par Titre
             while True:
                 titre_recherche = input(
-                    "Saisir le titre de l'événement : ",
+                    "Saisir le titre de l'événement :",
                     validate=validate_chaine
                 ).lower()
 
@@ -106,10 +105,10 @@ def maj_evenement_menu():
 
                 total_trouves = len(evenements_trouves)
                 if total_trouves == 0:
-                    print(" Aucun événement trouvé avec ce titre. Veuillez réessayer.")
+                    info("Aucun événement trouvé avec ce titre. Veuillez réessayer.")
                     continue
 
-                print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
+                info(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
 
                 # Afficher au maximum 5 événements
                 for e in evenements_trouves[:5]:
@@ -121,7 +120,7 @@ def maj_evenement_menu():
 
                 # Demander à l'utilisateur de préciser avec l'ID
                 identifiant = input(
-                    "Plusieurs événements correspondent, tapez l'ID exact de l'événement souhaité : ",
+                    "Plusieurs événements correspondent, tapez l'ID exact de l'événement souhaité :",
                     validate=lambda x: x.isdigit() or "Veuillez entrer un entier"
                 )
                 identifiant = int(identifiant)
@@ -130,14 +129,14 @@ def maj_evenement_menu():
                 if evenement:
                     break
                 else:
-                    print(" ID invalide, veuillez réessayer.")
+                    error("ID invalide, veuillez réessayer.")
 
         # Si un événement a été trouvé on sort de la boucle principale
         if evenement:
             break
 
     # Vérification finale
-    print(f" Événement trouvé : {evenement}")
+    success(f"Événement trouvé : {evenement}")
 
     # Saisie des nouvelles valeurs
     nouvelle_date_str = input(
@@ -158,7 +157,7 @@ def maj_evenement_menu():
     # Sauvegarde
     Evenement._sync()
 
-    print(f" Événement '{evenement.titre}' mis à jour avec succès !")
+    success(f"Événement '{evenement.titre}' mis à jour avec succès !")
 
     # Retour au menu principal
     return gestion_evenements_menu()
@@ -187,11 +186,11 @@ def recherche_evenements_par_personne():
                     evenements_trouves.append(e)
 
         if not evenements_trouves:
-            print(f"Aucun événement trouvé pour {choix.lower()} contenant '{recherche_str}'.\nVeuillez réessayer.")
+            info(f"Aucun événement trouvé pour {choix.lower()} contenant '{recherche_str}'.")
             continue  # Reboucle pour redemander le type de recherche
 
         total_trouves = len(evenements_trouves)
-        print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{recherche_str}'.")
+        success(f"{total_trouves} événement(s) trouvé(s) correspondant à '{recherche_str}'.")
 
         # Pagination pour afficher 10 événements max à la fois
         page_size = 10
@@ -208,7 +207,7 @@ def recherche_evenements_par_personne():
 
             # Vérification s'il y a plus de pages
             if end >= total_trouves:
-                print("Fin des résultats.\n")
+                info("Fin des résultats.")
                 break
 
             # Proposer la navigation
@@ -222,7 +221,7 @@ def recherche_evenements_par_personne():
                 break
 
         # Une fois la recherche terminée, retour automatique au menu principal
-        return gestion_evenements_menu()
+        return recherche_evenements_par_personne()
 
 
 
@@ -230,10 +229,10 @@ def lister_evenements():
     total = len(Evenement.evenements)
 
     if total == 0:
-        print(" Aucun événement trouvé.")
+        info(" Aucun événement trouvé.")
         return gestion_evenements_menu()
 
-    print(f"\n Nombre total d'événements : {total}\n")
+    info(f"Nombre total d'événements : {total}")
 
     page = 0
     taille_page = 10
@@ -249,12 +248,12 @@ def lister_evenements():
 
         # Vérifier si fin de la liste
         if end >= total:
-            print("\n Fin de la liste des événements.")
+            info("Fin de la liste des événements.")
             break
 
         # Options pour l'utilisateur
         choix = select(
-            "\nQue voulez-vous faire ?",
+            "Que voulez-vous faire ?",
             ["Voir les 10 suivants", "Retour au menu"]
         )
 
@@ -289,7 +288,7 @@ def annuler_evenement_menu():
                 if evenement:
                     break
                 else:
-                    print(" Aucun événement trouvé avec cet ID, veuillez réessayer.")
+                    info(" Aucun événement trouvé avec cet ID, veuillez réessayer.")
 
         else:  # Recherche par Titre
             while True:
@@ -305,10 +304,10 @@ def annuler_evenement_menu():
 
                 total_trouves = len(evenements_trouves)
                 if total_trouves == 0:
-                    print(" Aucun événement trouvé avec ce titre. Veuillez réessayer.")
+                    info(" Aucun événement trouvé avec ce titre. Veuillez réessayer.")
                     continue
 
-                print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
+                info(f"{total_trouves} événement(s) trouvé(s) correspondant à '{titre_recherche}':")
 
                 # Afficher au maximum 5 événements
                 for e in evenements_trouves[:5]:
@@ -329,14 +328,14 @@ def annuler_evenement_menu():
                 if evenement:
                     break
                 else:
-                    print(" ID invalide, veuillez réessayer.")
+                    error(" ID invalide, veuillez réessayer.")
 
         # Si un événement a été trouvé on sort de la boucle principale
         if evenement:
             break
 
     # Vérification finale
-    print(f"\n Événement trouvé : {evenement}\n")
+    success(f"Événement trouvé : {evenement}")
 
     # Confirmation avant suppression
     confirmation = select(
@@ -347,9 +346,9 @@ def annuler_evenement_menu():
     if confirmation == "Oui":
         Evenement.evenements.remove(evenement)
         Evenement._sync()
-        print(f" Événement '{evenement.titre}' supprimé avec succès !")
+        success(f" Événement '{evenement.titre}' supprimé avec succès !")
     else:
-        print(" Annulation de la suppression, l'événement reste inchangé.")
+        info(" Annulation de la suppression, l'événement reste inchangé.")
 
     # Retour au menu principal
     return gestion_evenements_menu()
