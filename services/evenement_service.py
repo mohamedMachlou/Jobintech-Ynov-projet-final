@@ -13,35 +13,13 @@ from validations.evenement import (
 
 
 
-#
-#
-# def gestion_evenements_menu():
-#     from services.main import main_menu
-#
-#     GESTION_EVENEMENTS_CHOICES = {
-#         "Recherche des Evenements": lambda: print("TODO: for concert"),
-#         "Ajouter un Evenement": lambda: print("TODO: for conferences"),
-#         "Mis à jour un Evenement": lambda: print("TODO: for conferences"),
-#         "Annuler un Evenement": lambda: print("TODO: for conferences"),
-#         "Retour": main_menu,
-#     }
-#     choice = select(
-#         " ",
-#         choices=list(GESTION_EVENEMENTS_CHOICES.keys()),
-#     )
-#
-#     GESTION_EVENEMENTS_CHOICES[choice]()
-
-
-
-
 
 
 def gestion_evenements_menu():
     from services.main import main_menu
 
     GESTION_EVENEMENTS_CHOICES = {
-        "Recherche des Evenements": lambda: print("TODO: recherche globale"),
+        "Recherche des Evenements": recherche_evenements_par_personne,
         "Ajouter un Evenement": ajouter_evenement_menu,
         "Mis à jour un Evenement": maj_evenement_menu,
         # "Annuler un Evenement": annuler_evenement_menu,
@@ -60,7 +38,6 @@ def ajouter_evenement_menu():
     # Choix du type d'événement
     choix = select("Choisir le type d'événement :", ["Concert", "Conférence"])
 
-    print('Ajout d\'event works ')
 
     # Saisie des informations avec validations correctes
     titre = input("Taper le Titre d'Evenement", validate=validate_chaine)
@@ -172,6 +149,67 @@ def maj_evenement_menu():
     print(f"Événement '{evenement.titre}' mis à jour avec succès !")
 
     gestion_evenements_menu()
+
+
+
+
+
+def recherche_evenements_par_personne():
+    while True:
+        # Choix du type de recherche
+        choix = select("Rechercher par :", ["Artiste", "Conférencier", "Retour au menu"])
+        if choix == "Retour au menu":
+            return gestion_evenements_menu()
+
+        recherche_str = input(f"Saisir le nom {choix.lower()} : ", validate=validate_chaine).lower()
+
+        # Récupération des événements correspondants
+        evenements_trouves = []
+        for e in Evenement.evenements:
+            if choix == "Artiste" and hasattr(e, "artiste"):
+                if recherche_str in e.artiste.lower():
+                    evenements_trouves.append(e)
+            elif choix == "Conférencier" and hasattr(e, "orateur_principal"):
+                if recherche_str in e.orateur_principal.lower():
+                    evenements_trouves.append(e)
+
+        if not evenements_trouves:
+            print(f"Aucun événement trouvé pour {choix.lower()} contenant '{recherche_str}'.\nVeuillez réessayer.")
+            continue  # Reboucle pour redemander le type de recherche
+
+        total_trouves = len(evenements_trouves)
+        print(f"{total_trouves} événement(s) trouvé(s) correspondant à '{recherche_str}'.")
+
+        # Pagination pour afficher 10 événements max à la fois
+        page_size = 10
+        page = 0
+
+        while True:
+            start = page * page_size
+            end = start + page_size
+            page_evenements = evenements_trouves[start:end]
+
+            for e in page_evenements:
+                pers = getattr(e, "artiste" if choix == "Artiste" else "orateur_principal")
+                print(f"ID {e.id_evenement} | {e.titre} | {pers} | {e.date.date()} | {e.lieu}")
+
+            # Vérification s'il y a plus de pages
+            if end >= total_trouves:
+                print("Fin des résultats.\n")
+                break
+
+            # Proposer la navigation
+            action = select(
+                "Que voulez-vous faire ?",
+                ["Afficher les 10 prochains", "Retour au menu"]
+            )
+            if action == "Afficher les 10 prochains":
+                page += 1
+            else:
+                break
+
+        # Une fois la recherche terminée, retour automatique au menu principal
+        return gestion_evenements_menu()
 
 
 
