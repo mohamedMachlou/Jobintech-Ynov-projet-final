@@ -2,34 +2,34 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from tabulate import tabulate
 from pathlib import Path
+from models import Evenement, Vente
 
 def generer_rapport_financier_et_frequentation(
         ventes_path="storage/ventes.json",
         evenements_path="storage/evenements.json",
         save_path="storage/rapport_ventes.png"
     ):
+    from services.main import main_menu
 
     # Charger ventes
-    with open(ventes_path, "r", encoding="utf-8") as f:
-        ventes = json.load(f)
+
+    ventes = Vente.ventes
 
     # Charger événements
-    with open(evenements_path, "r", encoding="utf-8") as f:
-        evenements = json.load(f)
 
-    df_ventes = pd.DataFrame(ventes)
-    df_evenements = pd.DataFrame(evenements)
+    evenements = Evenement.evenements
 
-    # Déterminer type (Concert / Conférence)
-    def infer_type(row):
-        if "artiste" in row and row["artiste"]:
-            return "Concert"
-        if "orateur_principal" in row and row["orateur_principal"]:
-            return "Conference"
-        return "Autre"
-
-    df_evenements["type"] = df_evenements.apply(infer_type, axis=1)
+    df_ventes = pd.DataFrame([v.to_dict() for v in ventes])
+    df_evenements = pd.DataFrame([
+        {**e.to_dict(),
+         "type": "Concert" if "artiste" in e.to_dict() and e.to_dict()["artiste"]
+         else "Conference" if "orateur_principal" in e.to_dict() and e.to_dict()["orateur_principal"]
+         else "Evenement"
+         }
+        for e in evenements
+    ])
 
     # Jointure ventes + infos événement
     df = df_ventes.merge(
@@ -81,15 +81,25 @@ def generer_rapport_financier_et_frequentation(
     plt.close()
 
     print("====== Rapport généré ======")
-    print(f"• Revenu par type d'événement:\n{'-'*28}\n", revenu_par_type)
-    print(f"\n• Statistiques globales:\n{'-'*30}\n", stats)
-    print(f"\n• Répartition billets par événement:\n{'-'*30}\n", pivot)
-    print(f"\n• Graphique sauvegardé dans: {save_path}")
-    print('='*24)
 
-    return {
-        "revenu_par_type": revenu_par_type,
-        "stats": stats,
-        "pivot": pivot,
-        "graph_path": save_path
-    }
+    # Titre et revenu par type d'événement
+    revenu_type = "Revenu par type d'événement"
+    separator = "-" * len(revenu_type)
+    print(f"\n{revenu_type}\n{separator}")
+    print(tabulate(revenu_par_type, headers="keys", tablefmt="fancy_grid", stralign="left", numalign="left"))
+
+    # Statistiques globales
+    stats_title = "Statistiques globales"
+    print(f"\n{stats_title}\n{'-' * len(stats_title)}")
+    print(tabulate([stats], headers="keys", tablefmt="fancy_grid", stralign="left", numalign="left"))
+
+    # Répartition billets par événement
+    pivot_title = "Répartition billets par événement"
+    print(f"\n{pivot_title}\n{'-' * len(pivot_title)}")
+    print(tabulate(pivot, headers="keys", tablefmt="fancy_grid", stralign="left", numalign="left"))
+
+    # Graphique
+    print(f"\n• Graphique sauvegardé dans: {save_path}")
+    print("=" * len(f"• Graphique sauvegardé dans: {save_path}\n"))
+
+    return main_menu()
