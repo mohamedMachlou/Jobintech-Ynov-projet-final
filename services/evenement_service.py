@@ -72,26 +72,31 @@ def ajouter_evenement_menu():
     # Saisie des informations avec validations correctes
     titre = input("Taper le Titre d'Evenement", validate=validate_chaine)
 
-    date_event = input(
+    from dateutil.parser import parse
+
+    date_event_str = input(
         "Date du concert (YYYY-MM-DD)",
         validate=lambda d: validate_date(d, future_only=True)
-
     )
-    date_event = datetime.datetime.fromisoformat(date_event)
+
+    # Convertir en objet datetime
+    date_event = parse(date_event_str)
 
     lieu = input("Lieu du concert", validate=validate_chaine)
     prix_base = input("Prix de base", validate=validate_float)
     capacite = input("Capacité", validate=validate_int)
-    artiste = input("Artiste", validate=validate_chaine)
 
     # Création de l'événement selon le type choisi
     if choix == "Concert":
+        print('choix de concert')
+        artiste = input("Artiste", validate=validate_chaine)
         Concert(titre, date_event, lieu, prix_base, capacite, artiste)
     elif choix == "Conférence":
+        print('choix de conference')
         conférencier = input("Nom du conférencier", validate=validate_chaine)
-        Conference(titre, date_event, lieu, capacite, conférencier)
+        Conference(titre, date_event, lieu,prix_base, capacite, conférencier)
 
-
+    gestion_evenements_menu()
 
 
 
