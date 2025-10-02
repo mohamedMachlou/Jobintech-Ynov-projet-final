@@ -8,6 +8,7 @@ from models.billet import Billet
 
 class Vente:
     ventes = []
+    __unserializable__ = {"evenement", "acheteur"}
     STORAGE_FILE = "storage/ventes.json"
     _id = 1
 
@@ -23,8 +24,8 @@ class Vente:
         self.id_vente = self._id if id_vente is None else id_vente
         self.id_evenement = id_evenement
         self.id_acheteur = id_acheteur
-        self.type_billet = type_billet
-        self.quantite = quantite
+        self._type_billet = type_billet
+        self._quantite = quantite
         self.date = Datetime.now() if date is None else date
         self.prix_total = (
             Billet.get_prix(type_billet, getattr(self.evenement, "prix_base", 0))
@@ -47,6 +48,40 @@ class Vente:
             self.evenement.places_vendues += 1
             self.evenement._sync()
 
+    @property
+    def quantite(self):
+        return self._quantite
+
+    @quantite.setter
+    def quantite(self, value):
+        evenement = self.evenement
+        if evenement is None:
+            return None
+
+        evenement.places_vendues -= self._quantite
+
+        self._quantite = value
+        self.prix_total = (
+            Billet.get_prix(self.type_billet, getattr(self.evenement, "prix_base", 0))
+            * value
+        )
+        self.prix_total += value
+        evenement.places_vendues += value
+        Vente._sync()
+
+    @property
+    def type_billet(self):
+        return self._type_billet
+
+    @type_billet.setter
+    def type_billet(self, value):
+        self._type_billet = value
+        self.prix_total = (
+            Billet.get_prix(value, getattr(self.evenement, "prix_base", 0))
+            * self._quantite
+        )
+        Vente._sync()
+
     def __str__(self):
         return f"{self.type_billet}: {self.evenement} x {self.quantite} = {self.prix_total}"
 
@@ -66,7 +101,7 @@ class Vente:
     def _sync(cls):
         with open(cls.STORAGE_FILE, "w+", encoding="utf-8") as f:
             dump(
-                [{**v.__dict__, "date": v.date.isoformat()} for v in cls.ventes],
+                [v.to_dict() for v in cls.ventes],
                 f,
                 indent=4,
                 ensure_ascii=False,
@@ -102,3 +137,24 @@ class Vente:
             error("Error while trying to load ventes json data, using empty data")
         except FileNotFoundError:
             pass
+
+    def to_dict(self):
+        data = {}
+
+        for k, v in self.__dict__.items():
+            new_key = k[1:] if k.startswith("_") else k
+            data[new_key] = v
+
+        for name, attr in vars(self.__class__).items():
+            if (
+                isinstance(attr, property)
+                and name not in data
+                and name not in self.__unserializable__
+            ):
+                value = getattr(self, name)
+                data[name] = value
+
+        if "date" in data and hasattr(data["date"], "isoformat"):
+            data["date"] = data["date"].isoformat()
+
+        return data

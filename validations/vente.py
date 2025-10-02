@@ -1,6 +1,5 @@
 from validations.common import validate_gt, validate_lte, validate_required
 
-
 def validate_buy_ticket_qty(q, max_qty):
     if isinstance(v := validate_required(q), str):
         return v
