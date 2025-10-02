@@ -1,6 +1,5 @@
-from models import Evenement, Vente, Acheteur, Billet
+from models import Evenement, Vente, Acheteur
 
 Evenement._load()
 Vente._load()
 Acheteur._load()
-Billet._load()
