@@ -1,9 +1,19 @@
-# from utils.inputs import select
+from utils.inputs import select, input
 from validations.evenement import (
     validate_chaine,
     validate_date,
     validate_float,
     validate_int
+)
+from services.concert_service import (
+    ajout_nouveau_concert,
+    update_concert,
+    delete_concert
+)
+from services.conference_service import (
+    ajout_nouvelle_conference,
+    update_conference,
+    delete_conference
 )
 
 
@@ -28,17 +38,7 @@ from validations.evenement import (
 
 
 
-from utils.inputs import select
-from services.concert_service import (
-    ajout_nouveau_concert,
-    update_concert,
-    delete_concert
-)
-from services.conference_service import (
-    ajout_nouvelle_conference,
-    update_conference,
-    delete_conference
-)
+
 
 
 def gestion_evenements_menu():
@@ -61,22 +61,31 @@ def gestion_evenements_menu():
 # sous-menus spécialisés
 def ajouter_evenement_menu():
 
+    # Choix du type d'événement
+    choix = select("Choisir le type d'événement :", ["Concert", "Conférence"])
 
-    titre = input("Taper le Titre d'Evenement",alidate=lambda titre: validate_chaine)
-    date = input("Date du concert (YYYY-MM-DD)", validate=validate_date)
+    print('Ajout d\'event works ')
+
+    # Saisie des informations avec validations correctes
+    titre = input("Taper le Titre d'Evenement", validate=validate_chaine)
+
+    date_event = input(
+        "Date du concert (YYYY-MM-DD)",
+        validate=lambda d: validate_date(d, future_only=True)
+    )
+
     lieu = input("Lieu du concert", validate=validate_chaine)
     prix_base = input("Prix de base", validate=validate_float)
     capacite = input("Capacité", validate=validate_int)
     artiste = input("Artiste", validate=validate_chaine)
 
-
-    choix = select("Choisir le type d'événement :", ["Concert", "Conférence"])
+    # Création de l'événement selon le type choisi
     if choix == "Concert":
-        ajout_nouveau_concert(titre, date, lieu, prix_base, capacite, artiste)
-
-
+        ajout_nouveau_concert(titre, date_event, lieu, prix_base, capacite, artiste)
     elif choix == "Conférence":
-        pass
+        conférencier = input("Nom du conférencier", validate=validate_chaine)
+        ajout_nouvelle_conference(titre, date_event, lieu, capacite, conférencier)
+
 
 
 
