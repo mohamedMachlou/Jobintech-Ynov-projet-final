@@ -10,11 +10,9 @@ def generer_rapport_financier_et_frequentation(
     from services.main import main_menu
 
     # Charger ventes
-
     ventes = Vente.ventes
 
     # Charger événements
-
     evenements = Evenement.evenements
 
     df_ventes = pd.DataFrame([v.to_dict() for v in ventes])
@@ -54,7 +52,7 @@ def generer_rapport_financier_et_frequentation(
         fill_value=0
     ).reset_index()
 
-    # Graphique empilé
+    # Géneration de Graphique empilé
     x = np.arange(len(pivot))
     fig, ax = plt.subplots(figsize=(12, 7), constrained_layout=True)
 
