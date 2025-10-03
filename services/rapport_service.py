@@ -1,3 +1,4 @@
+import matplotlib
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -71,7 +72,12 @@ def generer_rapport_financier_et_frequentation(
     ax.set_title("Répartition des ventes par événement")
     ax.legend()
 
+    #save graphique dans 'save_path'
     plt.savefig(save_path)
+    #Ouvrir une fenêtre affichant le graphique généré
+    matplotlib.use("TkAgg")
+    plt.show()
+    #Fermer la figure après affichage
     plt.close()
 
     print("====== Analyse et Rapports ======")
