@@ -72,14 +72,6 @@ def generer_rapport_financier_et_frequentation(
     ax.set_title("Répartition des ventes par événement")
     ax.legend()
 
-    #save graphique dans 'save_path'
-    plt.savefig(save_path)
-    #Ouvrir une fenêtre affichant le graphique généré
-    matplotlib.use("TkAgg")
-    plt.show()
-    #Fermer la figure après affichage
-    plt.close()
-
     print("====== Analyse et Rapports ======")
 
     # Titre et revenu par type d'événement
@@ -101,5 +93,13 @@ def generer_rapport_financier_et_frequentation(
     # Graphique
     print(f"\n• Graphique sauvegardé dans: {save_path}")
     print("=" * len(f"• Graphique sauvegardé dans: {save_path}\n"))
+
+    # save graphique dans 'save_path'
+    plt.savefig(save_path)
+    # Ouvrir une fenêtre affichant le graphique généré
+    matplotlib.use("TkAgg")
+    plt.show()
+    # Fermer la figure après affichage
+    plt.close()
 
     return main_menu()
