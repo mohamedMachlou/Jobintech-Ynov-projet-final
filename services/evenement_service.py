@@ -84,11 +84,12 @@ def maj_evenement_menu():
                 )
                 identifiant = int(identifiant)
 
-                evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant), None)
+                evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant and e.places_vendues == 0), None)
                 if evenement:
                     break
                 else:
-                    info("Aucun événement trouvé avec cet ID, veuillez réessayer.")
+                    info("cet ID ou avec un ou plusieurs billet vendu.")
+                    return maj_evenement_menu()
             # fin recherche par ID
 
         else:  # Recherche par Titre
@@ -100,7 +101,7 @@ def maj_evenement_menu():
 
                 # Recherche partielle insensible à la casse
                 evenements_trouves = [
-                    e for e in Evenement.evenements if titre_recherche in e.titre.lower()
+                    e for e in Evenement.evenements if titre_recherche in e.titre.lower() and e.places_vendues == 0
                 ]
 
                 total_trouves = len(evenements_trouves)
@@ -125,11 +126,12 @@ def maj_evenement_menu():
                     ):
                     identifiant = int(identifiant)
 
-                    evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
+                    evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant and e.places_vendues == 0), None)
                     if evenement:
                         break
                     else:
-                        error("ID invalide, veuillez réessayer.")
+                        error("ID invalide ou Déja vendu, veuillez réessayer.")
+                        return maj_evenement_menu()
                 if evenement:
                     break
 
@@ -286,11 +288,13 @@ def annuler_evenement_menu():
                 )
                 identifiant = int(identifiant)
 
-                evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant), None)
+                evenement = next((e for e in Evenement.evenements if e.id_evenement == identifiant  and e.places_vendues == 0), None)
                 if evenement:
                     break
                 else:
-                    info(" Aucun événement trouvé avec cet ID, veuillez réessayer.")
+                    info(" Aucun événement trouvé avec cet ID ou Déja vend")
+                    return annuler_evenement_menu()
+
 
         else:  # Recherche par Titre
             while True:
@@ -326,11 +330,12 @@ def annuler_evenement_menu():
                     ):
                     identifiant = int(identifiant)
 
-                    evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant), None)
+                    evenement = next((e for e in evenements_trouves if e.id_evenement == identifiant  and e.places_vendues == 0), None)
                     if evenement:
                         break
                     else:
                         error(" ID invalide, veuillez réessayer.")
+                        return annuler_evenement_menu()
                 if evenement:
                     break
 
