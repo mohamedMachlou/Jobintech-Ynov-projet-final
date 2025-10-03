@@ -21,9 +21,9 @@ def gestion_evenements_menu():
 
     GESTION_EVENEMENTS_CHOICES = {
         "Ajouter un Evenement": ajouter_evenement_menu,
-        "Recherche des Evenements": recherche_evenements_par_personne,
-        "Lister des Evenements": lister_evenements,
-        "Mis à jour un Evenement": maj_evenement_menu,
+        "Rechercher un Evenement": recherche_evenements_par_personne,
+        "Lister Les Evenements": lister_evenements,
+        "Mettre à jour un Evenement": maj_evenement_menu,
         "Annuler un Evenement": annuler_evenement_menu,
         "Retour": main_menu,
     }
